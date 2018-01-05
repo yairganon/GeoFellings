@@ -3,10 +3,10 @@ package spring.beans
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
+import coreLogic.repos.InMemoryTokenRepo
 import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.InMemoryTokenRepo
 import service.api.{NotificationService, NotificationTokenRepository}
 import spring.controllers.RootController
 

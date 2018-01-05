@@ -1,15 +1,12 @@
 package service.api
 
-import enums.QuestionType
-import util.QuestionId
+import service.dto.{CreateQuestionRequest, Question}
 
 trait QuestionsService {
 
-  def addQuestion(question: Question): Unit
+  def getAll: Seq[Question]
+
+  def addQuestion(question: CreateQuestionRequest): Unit
 }
 
-case class Question(id: QuestionId = QuestionId.random,
-                   `type`: QuestionType,
-                    questionString: String,
-                    numOfOptions: Option[Int])
 
