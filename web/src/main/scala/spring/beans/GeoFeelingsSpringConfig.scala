@@ -1,14 +1,15 @@
 package spring.beans
 
-import com.fasterxml.jackson.databind.{ DeserializationFeature, ObjectMapper }
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import coreLogic.repos.InMemoryTokenRepo
-import gcm.http.{ HttpGcm, SendPushNotification }
+import coreLogic.QuestionsFacade
+import coreLogic.repos.{InMemoryQuestionRepo, InMemoryTokenRepo}
+import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{ NotificationService, NotificationTokenRepository }
-import spring.controllers.RootController
+import service.api.{NotificationService, NotificationTokenRepository, QuestionsRepository, QuestionsService}
+import spring.controllers.{AdminController, RootController}
 
 @org.springframework.context.annotation.Configuration
 class GeoFeelingsSpringConfig {
@@ -39,6 +40,19 @@ class GeoFeelingsSpringConfig {
     sendPushNotification: SendPushNotification
   ): NotificationService = {
     new NotificationService(notificationTokenRepository, sendPushNotification)
+  }
+
+  @Bean
+  def questionsRepository(): QuestionsRepository = new InMemoryQuestionRepo
+
+  @Bean
+  def questionsService(questionsRepository: QuestionsRepository): QuestionsService = {
+    new QuestionsFacade(questionsRepository)
+  }
+
+  @Bean
+  def adminController(questionsService: QuestionsService): AdminController = {
+   new AdminController(questionsService)
   }
 
   @Bean
