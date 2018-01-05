@@ -1,15 +1,16 @@
 package spring.controllers
 
-import service.dto.{RegisterTokenRequest, UpdateLocationRequest}
+import service.dto.{ RegisterTokenRequest, UpdateLocationRequest }
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
-import org.springframework.web.bind.annotation.{RequestBody, RequestMapping, ResponseBody}
-import service.api.{NotificationService, NotificationTokenRepository}
-
+import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, ResponseBody }
+import service.api.{ NotificationService, NotificationTokenRepository }
 
 @Controller
-class RootController(tokenRepo: NotificationTokenRepository,
-                     notificationService: NotificationService) {
+class RootController(
+  tokenRepo: NotificationTokenRepository,
+    notificationService: NotificationService
+) {
 
   @RequestMapping(method = Array(POST), value = Array("/registerToken"))
   @ResponseBody

@@ -1,6 +1,6 @@
 package service.api
 
-import service.dto.{CreateQuestionRequest, Question}
+import service.dto.{ CreateQuestionRequest, Question }
 
 trait QuestionsService {
 
@@ -8,5 +8,4 @@ trait QuestionsService {
 
   def addQuestion(question: CreateQuestionRequest): Unit
 }
-
 

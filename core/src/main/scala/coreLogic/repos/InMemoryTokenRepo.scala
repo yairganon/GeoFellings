@@ -4,7 +4,7 @@ import service.api.NotificationTokenRepository
 
 import scala.collection.mutable
 
-class InMemoryTokenRepo extends NotificationTokenRepository{
+class InMemoryTokenRepo extends NotificationTokenRepository {
 
   val tokens: mutable.Set[String] = mutable.Set[String]()
 

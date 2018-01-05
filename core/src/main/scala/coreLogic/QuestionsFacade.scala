@@ -1,7 +1,7 @@
 package coreLogic
 
-import service.api.{QuestionsRepository, QuestionsService}
-import service.dto.{CreateQuestionRequest, Question}
+import service.api.{ QuestionsRepository, QuestionsService }
+import service.dto.{ CreateQuestionRequest, Question }
 
 class QuestionsFacade(questionsRepository: QuestionsRepository) extends QuestionsService {
 

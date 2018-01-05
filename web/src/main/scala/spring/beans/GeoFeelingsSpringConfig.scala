@@ -1,13 +1,13 @@
 package spring.beans
 
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+import com.fasterxml.jackson.databind.{ DeserializationFeature, ObjectMapper }
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import coreLogic.repos.InMemoryTokenRepo
-import gcm.http.{HttpGcm, SendPushNotification}
+import gcm.http.{ HttpGcm, SendPushNotification }
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{NotificationService, NotificationTokenRepository}
+import service.api.{ NotificationService, NotificationTokenRepository }
 import spring.controllers.RootController
 
 @org.springframework.context.annotation.Configuration
@@ -34,15 +34,18 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def notificationService(notificationTokenRepository: NotificationTokenRepository,
-                          sendPushNotification: SendPushNotification
-                         ): NotificationService = {
+  def notificationService(
+    notificationTokenRepository: NotificationTokenRepository,
+    sendPushNotification: SendPushNotification
+  ): NotificationService = {
     new NotificationService(notificationTokenRepository, sendPushNotification)
   }
 
   @Bean
-  def rootController(notificationTokenRepository: NotificationTokenRepository,
-                     notificationService: NotificationService): RootController =
+  def rootController(
+    notificationTokenRepository: NotificationTokenRepository,
+    notificationService: NotificationService
+  ): RootController =
     new RootController(notificationTokenRepository, notificationService)
 
 }

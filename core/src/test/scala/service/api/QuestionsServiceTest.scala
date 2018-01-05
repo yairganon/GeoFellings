@@ -16,6 +16,5 @@ class QuestionsServiceTest extends Specification {
       service.addQuestion(request)
       service.getAll must haveSize(1)
     }
-
   }
 }

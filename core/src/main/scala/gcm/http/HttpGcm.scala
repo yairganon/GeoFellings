@@ -14,14 +14,13 @@ trait SendPushNotification {
   def isApiKeyValid: Boolean
 }
 
-class HttpGcm() extends SendPushNotification{
+class HttpGcm() extends SendPushNotification {
 
   val pipeline: HttpRequest => Future[HttpResponse] = {
     val actorSystem = ActorSystem("HttpGcm798720955034")
     addHeader("Authorization", "key=AIzaSyAHx4hWo79xfxEtaE5VVFjjmCcwwUEHYAk") ~>
       sendReceive(actorSystem, actorSystem.dispatcher)
   }
-
 
   private def jsonRequest(content: String) =
     HttpRequest(

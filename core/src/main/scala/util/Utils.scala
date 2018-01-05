@@ -7,8 +7,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
-
+import scala.concurrent.{ Await, Future }
 
 object Utils {
 

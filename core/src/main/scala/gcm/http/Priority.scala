@@ -1,8 +1,9 @@
 package gcm.http
 
 case class Message(
-                    to: String,
-                    notification: Notification = Notification())
+  to: String,
+  notification: Notification = Notification()
+)
 
 object Messages {
 
@@ -11,6 +12,7 @@ object Messages {
 }
 
 case class Notification(
-                         title: String = "Ronnen",
-                         body: String = "This is Body",
-                         icon: String = "myicon")
+  title: String = "Ronnen",
+  body: String = "This is Body",
+  icon: String = "myicon"
+)
