@@ -1,7 +1,7 @@
 package service.dto
 
-import enums.QuestionType
-import util.QuestionId
+import enums.{ QuestionType, Gender }
+import util.{ QuestionId, UserId }
 
 case class Question(
   id: QuestionId = QuestionId.random,
@@ -9,3 +9,5 @@ case class Question(
   questionString: String,
   numOfOptions: Option[Int]
 )
+
+case class User(userId: UserId, password: String, gender: Gender, age: Int)

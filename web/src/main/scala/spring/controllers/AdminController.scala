@@ -1,6 +1,6 @@
 package spring.controllers
 
-import service.dto.CreateQuestionRequest
+import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest }
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, RequestMethod, ResponseBody }
 import service.api.QuestionsService
@@ -15,6 +15,12 @@ class AdminController(questionsService: QuestionsService) {
   def createQuestion(@RequestBody request: CreateQuestionRequest): Unit = {
     questionsService.addQuestion(request)
     println(request)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("questionnaire"))
+  @ResponseBody
+  def createQuestionnaire(@RequestBody request: CreateQuestionnaireRequest): Unit = {
+    print(request)
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("question"))
