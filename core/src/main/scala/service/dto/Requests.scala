@@ -1,6 +1,6 @@
 package service.dto
 
-import enums.QuestionType
+import enums.{Gender, QuestionType}
 import util.QuestionId
 
 case class RegisterTokenRequest(token: String)
@@ -14,3 +14,5 @@ case class CreateQuestionData(questionString: String, numOfOptions: Option[Int])
 case class CreateQuestionnaireRequest(name: String, ids: Seq[QuestionId])
 
 case class UserLoginRequest(userName: String, password: String)
+
+case class UserRegisterRequest(userName: String, password: String, gender: Gender, age: Int)
