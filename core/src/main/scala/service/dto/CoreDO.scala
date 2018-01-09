@@ -10,4 +10,4 @@ case class Question(
   numOfOptions: Option[Int]
 )
 
-case class User(userId: UserId, password: String, gender: Gender, age: Int)
+case class User(userId: UserId, userName: String, password: String, gender: Gender, age: Int)

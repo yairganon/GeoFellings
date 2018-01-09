@@ -1,6 +1,6 @@
-package coreLogic.repos
+package coreLogic.repos.inMemory
 
-import service.api.NotificationTokenRepository
+import coreLogic.repos.NotificationTokenRepository
 
 import scala.collection.mutable
 

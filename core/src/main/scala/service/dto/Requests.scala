@@ -1,6 +1,6 @@
 package service.dto
 
-import enums.{Gender, QuestionType}
+import enums.{ Gender, QuestionType }
 import util.QuestionId
 
 case class RegisterTokenRequest(token: String)

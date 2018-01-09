@@ -3,13 +3,14 @@ package spring.beans
 import com.fasterxml.jackson.databind.{ DeserializationFeature, ObjectMapper }
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import coreLogic.QuestionsFacade
-import coreLogic.repos.{ InMemoryQuestionRepo, InMemoryTokenRepo }
+import coreLogic.{ QuestionsFacade, RegistrationFacade }
+import coreLogic.repos.{ NotificationService, NotificationTokenRepository, QuestionsRepository, RegistrationRepository }
+import coreLogic.repos.inMemory.{ InMemoryQuestionRepo, InMemoryRegistrationRepo, InMemoryTokenRepo }
 import gcm.http.{ HttpGcm, SendPushNotification }
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{ NotificationService, NotificationTokenRepository, QuestionsRepository, QuestionsService }
-import spring.controllers.{ AdminController, RootController }
+import service.api.{ QuestionsService, RegistrationService }
+import spring.controllers.{ AdminController, RootController, UsersRegistrationController }
 
 @org.springframework.context.annotation.Configuration
 class GeoFeelingsSpringConfig {
@@ -32,6 +33,11 @@ class GeoFeelingsSpringConfig {
   @Bean
   def sendPushNotification: SendPushNotification = {
     new HttpGcm()
+  }
+
+  @Bean
+  def registrationRepo: RegistrationRepository = {
+    new InMemoryRegistrationRepo
   }
 
   @Bean
@@ -62,4 +68,8 @@ class GeoFeelingsSpringConfig {
   ): RootController =
     new RootController(notificationTokenRepository, notificationService)
 
+  @Bean
+  def registrationService(registrationRepo: RegistrationRepository): RegistrationService = {
+    new RegistrationFacade(registrationRepo)
+  }
 }

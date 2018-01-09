@@ -1,10 +1,10 @@
 package spring.controllers
 
-import service.dto.{ RegisterTokenRequest, UpdateLocationRequest }
+import coreLogic.repos.{ NotificationService, NotificationTokenRepository }
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
 import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, ResponseBody }
-import service.api.{ NotificationService, NotificationTokenRepository }
+import service.dto.{ RegisterTokenRequest, UpdateLocationRequest }
 
 @Controller
 class RootController(

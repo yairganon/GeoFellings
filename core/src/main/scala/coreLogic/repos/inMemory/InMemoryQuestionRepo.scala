@@ -1,6 +1,6 @@
-package coreLogic.repos
+package coreLogic.repos.inMemory
 
-import service.api.QuestionsRepository
+import coreLogic.repos.QuestionsRepository
 import service.dto.Question
 import util.QuestionId
 

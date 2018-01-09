@@ -1,10 +1,11 @@
-package service.api
+package coreLogic.repos
 
 import gcm.http.{ Messages, SendPushNotification }
 
 trait NotificationTokenRepository {
 
   def addToken(token: String): Unit
+
   def getTokens: Seq[String]
 }
 

@@ -1,6 +1,6 @@
 package views
 
-import enums.{QuestionType, RegisterStatus}
+import enums.{ QuestionType, RegisterStatus }
 
 case class QuestionsView(questions: Seq[QuestionView])
 

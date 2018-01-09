@@ -1,7 +1,7 @@
 package service.api
 
 import coreLogic.QuestionsFacade
-import coreLogic.repos.InMemoryQuestionRepo
+import coreLogic.repos.inMemory.InMemoryQuestionRepo
 import enums.QuestionType
 import org.specs2.mutable.Specification
 import service.dto.{CreateQuestionData, CreateQuestionRequest}
