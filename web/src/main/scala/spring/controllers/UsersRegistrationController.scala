@@ -20,6 +20,7 @@ class UsersRegistrationController(registrationService: RegistrationService) {
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("register"))
   @ResponseBody
   def register(@RequestBody request: UserRegisterRequest): RegisterStatusView = {
+    print(request)
     RegisterStatusView(registrationService.registerUser(request))
   }
 }
