@@ -1,16 +1,22 @@
 package coreLogic.repos.inMemory
 
 import coreLogic.repos.QuestionsRepository
-import service.dto.Question
-import util.QuestionId
+import service.dto.{ Question, Questionnaire }
+import util.{ QuestionId, QuestionnaireId }
 
 import scala.collection.mutable
 
 class InMemoryQuestionRepo extends QuestionsRepository {
 
-  val repo = mutable.HashMap.empty[QuestionId, Question]
+  val questionRepo = mutable.HashMap.empty[QuestionId, Question]
 
-  override def add(question: Question): Unit = repo += question.id -> question
+  val questionnaireRepo = mutable.HashMap.empty[QuestionnaireId, Questionnaire]
 
-  override def getAll: Seq[Question] = repo.values.toSeq
+  override def add(question: Question): Unit = questionRepo += question.id -> question
+
+  override def getQuestions: Seq[Question] = questionRepo.values.toSeq
+
+  override def add(questionnaire: Questionnaire): Unit = questionnaireRepo += questionnaire.id -> questionnaire
+
+  override def getQuestionnaires: Seq[Questionnaire] = questionnaireRepo.values.toSeq
 }

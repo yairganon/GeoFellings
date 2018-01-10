@@ -1,10 +1,11 @@
 package spring.controllers
 
-import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest }
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, RequestMethod, ResponseBody }
 import service.api.QuestionsService
-import views.{ QuestionDataView, QuestionView, QuestionsView }
+import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest }
+import views.ToViews._
+import views.{ QuestionnairesView, QuestionsView }
 
 @Controller
 @RequestMapping(Array("/api/admin"))
@@ -14,22 +15,27 @@ class AdminController(questionsService: QuestionsService) {
   @ResponseBody
   def createQuestion(@RequestBody request: CreateQuestionRequest): Unit = {
     questionsService.addQuestion(request)
-    println(request)
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("questionnaire"))
   @ResponseBody
   def createQuestionnaire(@RequestBody request: CreateQuestionnaireRequest): Unit = {
-    print(request)
+    questionsService.addQuestionnaire(request)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("questionnaire"))
+  @ResponseBody
+  def getQuestionnaires: QuestionnairesView = {
+    val questions = questionsService.getAll
+    QuestionnairesView(questionsService.getQuestionnaires.map(_.toView(questions)))
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("question"))
   @ResponseBody
   def getQuestions: QuestionsView = {
     QuestionsView(
-      questionsService
-        .getAll
-        .map(q => QuestionView(q.id.getId, q.`type`, QuestionDataView(q.questionString, q.numOfOptions)))
+      questionsService.getAll
+        .map(_.toView)
     )
   }
 }

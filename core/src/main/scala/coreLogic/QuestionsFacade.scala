@@ -2,7 +2,8 @@ package coreLogic
 
 import coreLogic.repos.QuestionsRepository
 import service.api.QuestionsService
-import service.dto.{ CreateQuestionRequest, Question }
+import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest, Question, Questionnaire }
+import util.QuestionnaireId
 
 class QuestionsFacade(questionsRepository: QuestionsRepository) extends QuestionsService {
 
@@ -15,5 +16,20 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
     questionsRepository.add(question)
   }
 
-  override def getAll: Seq[Question] = questionsRepository.getAll
+  override def getAll: Seq[Question] = questionsRepository.getQuestions
+
+  override def addQuestionnaire(request: CreateQuestionnaireRequest): Unit = {
+    questionsRepository
+      .add(Questionnaire(
+        id = QuestionnaireId.random,
+        name = request.name,
+        isRegistration = false,
+        isDefault = false,
+        questions = request.ids
+      ))
+  }
+
+  override def getQuestionnaires: Seq[Questionnaire] = {
+    questionsRepository.getQuestionnaires
+  }
 }
