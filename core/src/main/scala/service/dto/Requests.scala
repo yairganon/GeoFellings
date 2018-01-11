@@ -22,3 +22,5 @@ case class UserRegisterRequest(userName: String,
                                gender: Gender,
                                age: Int,
                                questionnaireAnswer: Option[Seq[QuestionAnswer]])
+
+case class TwitterTokens(accessToken: String, accessTokenSecret: String)

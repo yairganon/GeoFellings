@@ -17,18 +17,9 @@ class UsersRegistrationController(registrationService: RegistrationService) {
     registrationService.loginUser(request)
   }
 
-  @RequestMapping(method = Array(RequestMethod.POST), value = Array("twitter"))
-  @ResponseBody
-  def saveTwitterTokens(@RequestBody request: Map[String, String],
-                        @RequestHeader(value = "userId") userId: UserId): Unit = {
-    println(userId)
-    println(request)
-  }
-
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("register"))
   @ResponseBody
   def register(@RequestBody request: UserRegisterRequest): RegisterStatusView = {
-    print(request)
     RegisterStatusView(registrationService.registerUser(request))
   }
 }

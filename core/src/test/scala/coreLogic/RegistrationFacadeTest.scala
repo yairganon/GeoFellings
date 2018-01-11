@@ -14,7 +14,7 @@ class RegistrationFacadeTest extends Specification {
     val passWord = "random password"
     val gender = Gender.MALE
     val age = 6
-    val request = UserRegisterRequest(userName, passWord, gender, age)
+    val request = UserRegisterRequest(userName, passWord, gender, age, None)
     "registerUser and then login" in {
 
 

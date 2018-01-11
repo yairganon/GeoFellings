@@ -1,16 +1,16 @@
 package spring.beans
 
-import com.fasterxml.jackson.databind.{ DeserializationFeature, ObjectMapper }
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import coreLogic.{ QuestionsFacade, RegistrationFacade }
-import coreLogic.repos.{ NotificationService, NotificationTokenRepository, QuestionsRepository, RegistrationRepository }
-import coreLogic.repos.inMemory.{ InMemoryQuestionRepo, InMemoryRegistrationRepo, InMemoryTokenRepo }
-import gcm.http.{ HttpGcm, SendPushNotification }
+import coreLogic.{QuestionsFacade, RegistrationFacade, ThirdPartyFacade}
+import coreLogic.repos.{NotificationService, NotificationTokenRepository, QuestionsRepository, RegistrationRepository}
+import coreLogic.repos.inMemory.{InMemoryQuestionRepo, InMemoryRegistrationRepo, InMemoryTokenRepo}
+import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{ QuestionsService, RegistrationService }
-import spring.controllers.{ AdminController, RootController, UsersRegistrationController }
+import service.api.{QuestionsService, RegistrationService, ThirdPartyService}
+import spring.controllers.{AdminController, RootController, UsersRegistrationController}
 
 @org.springframework.context.annotation.Configuration
 class GeoFeelingsSpringConfig {
@@ -71,5 +71,10 @@ class GeoFeelingsSpringConfig {
   @Bean
   def registrationService(registrationRepo: RegistrationRepository): RegistrationService = {
     new RegistrationFacade(registrationRepo)
+  }
+
+  @Bean
+  def thirdPartyService: ThirdPartyService = {
+    new ThirdPartyFacade()
   }
 }
