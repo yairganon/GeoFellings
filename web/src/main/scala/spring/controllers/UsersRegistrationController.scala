@@ -1,9 +1,9 @@
 package spring.controllers
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, RequestMethod, ResponseBody }
+import org.springframework.web.bind.annotation._
 import service.api.RegistrationService
-import service.dto.{ UserLoginRequest, UserRegisterRequest }
+import service.dto.{UserLoginRequest, UserRegisterRequest}
 import util.UserId
 import views.RegisterStatusView
 
@@ -15,6 +15,14 @@ class UsersRegistrationController(registrationService: RegistrationService) {
   @ResponseBody
   def login(@RequestBody request: UserLoginRequest): Option[UserId] = {
     registrationService.loginUser(request)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("twitter"))
+  @ResponseBody
+  def saveTwitterTokens(@RequestBody request: Map[String, String],
+                        @RequestHeader(value = "userId") userId: UserId): Unit = {
+    println(userId)
+    println(request)
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("register"))
