@@ -1,12 +1,12 @@
 package coreLogic
 
-import coreLogic.repos.RegistrationRepository
+import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
 import service.api.RegistrationService
 import service.dto.{ User, UserLoginRequest, UserRegisterRequest }
 import util.UserId
 
-class RegistrationFacade(registrationRepo: RegistrationRepository) extends RegistrationService {
+class RegistrationFacade(registrationRepo: UsersRepository) extends RegistrationService {
 
   override def registerUser(request: UserRegisterRequest): RegisterStatus = {
     registrationRepo.add(User(UserId.random, request.userName, request.password, request.gender, request.age))

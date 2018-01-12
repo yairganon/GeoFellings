@@ -1,15 +1,18 @@
 package spring.controllers
 
+import coreLogic.repos.UsersRepository
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, RequestMethod, ResponseBody }
+import org.springframework.web.bind.annotation._
 import service.api.QuestionsService
-import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest }
+import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest}
+import util.UserId
 import views.ToViews._
-import views.{ QuestionnairesView, QuestionsView }
+import views.{QuestionnairesView, QuestionsView, UserView, UsersView}
 
 @Controller
 @RequestMapping(Array("/api/admin"))
-class AdminController(questionsService: QuestionsService) {
+class AdminController(questionsService: QuestionsService,
+                      usersRepository: UsersRepository) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("question"))
   @ResponseBody
@@ -37,5 +40,17 @@ class AdminController(questionsService: QuestionsService) {
       questionsService.getAll
         .map(_.toView)
     )
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("user"))
+  @ResponseBody
+  def getUsers: UsersView = {
+    UsersView(usersRepository.getAll.map(_.toView))
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("user/{userId}"))
+  @ResponseBody
+  def getUser(@PathVariable("userId") userId: UserId): UserView = {
+    usersRepository.get(userId).toView
   }
 }

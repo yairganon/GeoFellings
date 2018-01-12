@@ -1,6 +1,6 @@
 package coreLogic
 
-import coreLogic.repos.inMemory.InMemoryRegistrationRepo
+import coreLogic.repos.inMemory.InMemoryUsersRepo
 import enums.{Gender, RegisterStatus}
 import org.specs2.mutable.Specification
 import service.api.RegistrationService
@@ -9,7 +9,7 @@ import service.dto.{User, UserLoginRequest, UserRegisterRequest}
 class RegistrationFacadeTest extends Specification {
 
   "RegistrationFacadeTest" should {
-    val registrationFacade: RegistrationService = new RegistrationFacade(new InMemoryRegistrationRepo)
+    val registrationFacade: RegistrationService = new RegistrationFacade(new InMemoryUsersRepo)
     val userName = "random name"
     val passWord = "random password"
     val gender = Gender.MALE

@@ -1,6 +1,7 @@
 package views
 
-import enums.{ QuestionType, RegisterStatus }
+import enums.{Gender, QuestionType, RegisterStatus}
+import util.UserId
 
 case class QuestionsView(questions: Seq[QuestionView])
 
@@ -19,3 +20,10 @@ case class QuestionnaireView(
   isDefault: Boolean,
   questions: Seq[QuestionView]
 )
+
+case class UserView(userId: UserId,
+                    userName: String,
+                    gender: Gender,
+                    age: Int)
+
+case class UsersView(users: Seq[UserView])

@@ -1,13 +1,13 @@
 package coreLogic.repos.inMemory
 
-import coreLogic.repos.RegistrationRepository
+import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
 import service.dto.User
 import util.UserId
 
 import scala.collection.mutable
 
-class InMemoryRegistrationRepo extends RegistrationRepository {
+class InMemoryUsersRepo extends UsersRepository {
 
   val repo = mutable.HashMap.empty[(UserId, String, String), User]
 
@@ -24,4 +24,6 @@ class InMemoryRegistrationRepo extends RegistrationRepository {
 
   override def isExist(userName: String, passWord: String): Option[UserId] =
     repo.collectFirst { case ((uId, `userName`, `passWord`), _) => uId }
+
+  override def getAll: Seq[User] = repo.values.toSeq
 }
