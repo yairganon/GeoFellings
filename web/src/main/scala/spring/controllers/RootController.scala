@@ -4,7 +4,7 @@ import coreLogic.repos.{ NotificationService, NotificationTokenRepository }
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
 import org.springframework.web.bind.annotation.{ RequestBody, RequestMapping, ResponseBody }
-import service.dto.{ RegisterTokenRequest, UpdateLocationRequest }
+import service.dto.{ RegisterTokenRequest, Location }
 
 @Controller
 class RootController(
@@ -21,7 +21,7 @@ class RootController(
 
   @RequestMapping(method = Array(POST), value = Array("/sendLocation"))
   @ResponseBody
-  def updateLocation(@RequestBody cmd: UpdateLocationRequest): Unit = {
+  def updateLocation(@RequestBody cmd: Location): Unit = {
     print(cmd)
   }
 

@@ -5,7 +5,7 @@ import util.{QuestionId, QuestionnaireId}
 
 case class RegisterTokenRequest(token: String)
 
-case class UpdateLocationRequest(latitude: Double, longitude: Double)
+case class Location(latitude: Double, longitude: Double)
 
 case class CreateQuestionRequest(questionType: QuestionType, data: CreateQuestionData)
 
@@ -25,4 +25,4 @@ case class UserRegisterRequest(userName: String,
 
 case class TwitterTokens(accessToken: String, accessTokenSecret: String)
 
-case class QuestionnaireAnswer(id: QuestionnaireId, answers: Seq[QuestionAnswer])
+case class QuestionnaireAnswer(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])

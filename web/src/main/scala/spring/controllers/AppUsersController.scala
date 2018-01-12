@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, RegistrationService}
 import service.dto.{UserLoginRequest, UserRegisterRequest}
-import views.{QuestionnaireView, QuestionsView, RegisterStatusView}
 import views.ToViews._
+import views.{QuestionnaireView, RegisterStatusView}
 
 @Controller
 @RequestMapping(Array("/api/user"))
