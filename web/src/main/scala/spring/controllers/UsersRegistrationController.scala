@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.RegistrationService
 import service.dto.{UserLoginRequest, UserRegisterRequest}
-import util.UserId
 import views.RegisterStatusView
 
 @Controller
@@ -13,8 +12,8 @@ class UsersRegistrationController(registrationService: RegistrationService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("login"))
   @ResponseBody
-  def login(@RequestBody request: UserLoginRequest): Option[UserId] = {
-    registrationService.loginUser(request)
+  def login(@RequestBody request: UserLoginRequest): Option[String] = {
+    registrationService.loginUser(request).map(_.getId)
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("register"))
