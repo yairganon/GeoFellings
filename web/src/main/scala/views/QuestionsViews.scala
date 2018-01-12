@@ -1,6 +1,7 @@
 package views
 
 import enums.{Gender, QuestionType, RegisterStatus}
+import service.dto.QuestionnaireWithAnswersDto
 import util.UserId
 
 case class QuestionsView(questions: Seq[QuestionView])
@@ -24,21 +25,11 @@ case class UserView(userId: UserId,
                     gender: Gender,
                     age: Int)
 
-case class QuestionWithAnswersView(id: String,
-                                   questionType: QuestionType,
-                                   data: QuestionDataView,
-                                   answer: String)
-
-case class QuestionnaireWithAnswersView(id: String,
-                                        name: String,
-                                        isRegistration: Boolean,
-                                        isDefault: Boolean,
-                                        questions: Seq[QuestionWithAnswersView])
 
 case class FullUserView(userId: UserId,
                         userName: String,
                         gender: Gender,
                         age: Int,
-                        questionnaires: Seq[QuestionnaireWithAnswersView])
+                        questionnaires: Seq[QuestionnaireWithAnswersDto])
 
 case class UsersView(users: Seq[UserView])

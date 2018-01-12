@@ -1,6 +1,7 @@
 package coreLogic.repos
 
-import service.dto.{ Question, Questionnaire }
+import service.dto.{Question, Questionnaire, QuestionnaireAnswer}
+import util.{QuestionId, QuestionnaireId, UserId}
 
 trait QuestionsRepository {
 
@@ -16,4 +17,11 @@ trait QuestionsRepository {
 
   def defaultQuestionnaire: Option[Questionnaire]
 
+  def submit(questionnaireAnswer: QuestionnaireAnswer): Unit
+
+  def getAnswers(userId: UserId): Seq[QuestionnaireAnswer]
+
+  def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire
+
+  def getQuestion(questionId: QuestionId): Question
 }

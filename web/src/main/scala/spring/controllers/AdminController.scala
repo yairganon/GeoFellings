@@ -7,7 +7,7 @@ import service.api.QuestionsService
 import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest}
 import util.UserId
 import views.ToViews._
-import views.{QuestionnairesView, QuestionsView, UserView, UsersView}
+import views._
 
 @Controller
 @RequestMapping(Array("/api/admin"))
@@ -50,7 +50,15 @@ class AdminController(questionsService: QuestionsService,
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("user/{userId}"))
   @ResponseBody
-  def getUser(@PathVariable("userId") userId: UserId): UserView = {
-    usersRepository.get(userId).toView
+  def getUser(@PathVariable("userId") userId: UserId): FullUserView = {
+    questionsService.getUserQuestionnaires(userId)
+    val user = usersRepository.get(userId)
+    FullUserView(
+      user.userId,
+      user.userName,
+      user.gender,
+      user.age,
+      questionsService.getUserQuestionnaires(userId)
+    )
   }
 }

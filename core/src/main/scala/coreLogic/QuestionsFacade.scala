@@ -1,9 +1,10 @@
 package coreLogic
 
 import coreLogic.repos.QuestionsRepository
+import org.joda.time.DateTime
 import service.api.QuestionsService
-import service.dto.{ CreateQuestionRequest, CreateQuestionnaireRequest, Question, Questionnaire }
-import util.QuestionnaireId
+import service.dto._
+import util.{QuestionnaireId, UserId}
 
 class QuestionsFacade(questionsRepository: QuestionsRepository) extends QuestionsService {
 
@@ -36,4 +37,38 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
   override def registerQuestionnaire: Option[Questionnaire] = questionsRepository.registerQuestionnaire
 
   override def defaultQuestionnaire: Option[Questionnaire] = questionsRepository.defaultQuestionnaire
+
+  override def submit(userId: UserId, request: QuestionnaireAnswerRequest, submitTime: DateTime): Unit = {
+    questionsRepository.submit(QuestionnaireAnswer(
+      userId,
+      request.id,
+      submitTime,
+      request.location,
+      request.answers
+    ))
+  }
+
+  override def getUserQuestionnaires(userId: UserId): Seq[QuestionnaireWithAnswersDto] = {
+    questionsRepository
+      .getAnswers(userId)
+      .map(questionnaireAnswer => {
+        val questionnaire = questionsRepository.getQuestionnaire(questionnaireAnswer.questionnaireId)
+        QuestionnaireWithAnswersDto(
+          questionnaire.id,
+          questionnaire.name, questionnaire.isRegistration,
+          questionnaire.isDefault,
+          questionnaireAnswer.answers.map(questionnaireAnswer => {
+            val question = questionsRepository.getQuestion(questionnaireAnswer.id)
+            QuestionWithAnswersDto(
+              question.id,
+              question.`type`,
+              question.questionString,
+              question.numOfOptions,
+              questionnaireAnswer.answer
+            )
+          })
+        )
+      }
+      )
+  }
 }

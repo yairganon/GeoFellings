@@ -3,7 +3,8 @@ package spring.controllers
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, RegistrationService}
-import service.dto.{UserLoginRequest, UserRegisterRequest}
+import service.dto.{QuestionnaireAnswerRequest, UserLoginRequest, UserRegisterRequest}
+import util.UserId
 import views.ToViews._
 import views.{QuestionnaireView, RegisterStatusView}
 
@@ -39,5 +40,11 @@ class AppUsersController(registrationService: RegistrationService,
     questionsService.defaultQuestionnaire.map(_.toView(questions))
   }
 
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("questionnaire/submit"))
+  @ResponseBody
+  def submit(@RequestBody request: QuestionnaireAnswerRequest,
+             @RequestHeader(value = "userId") userId: UserId): Unit = {
+    questionsService.submit(userId, request)
+  }
 
 }

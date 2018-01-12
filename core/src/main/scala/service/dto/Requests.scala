@@ -21,8 +21,8 @@ case class UserRegisterRequest(userName: String,
                                password: String,
                                gender: Gender,
                                age: Int,
-                               questionnaireAnswer: Option[QuestionnaireAnswer])
+                               questionnaireAnswer: Option[QuestionnaireAnswerRequest])
 
 case class TwitterTokens(accessToken: String, accessTokenSecret: String)
 
-case class QuestionnaireAnswer(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
+case class QuestionnaireAnswerRequest(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
