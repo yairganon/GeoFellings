@@ -9,8 +9,8 @@ import views.ToViews._
 
 @Controller
 @RequestMapping(Array("/api/user"))
-class UsersRegistrationController(registrationService: RegistrationService,
-                                  questionsService: QuestionsService) {
+class UsersController(registrationService: RegistrationService,
+                      questionsService: QuestionsService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("login"))
   @ResponseBody
@@ -31,4 +31,13 @@ class UsersRegistrationController(registrationService: RegistrationService,
     val questions = questionsService.getAll
     questionsService.registerQuestionnaire.map(_.toView(questions))
   }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("defaultQuestionnaire"))
+  @ResponseBody
+  def defaultQuestionnaire(): Option[QuestionnaireView] = {
+    val questions = questionsService.getAll
+    questionsService.defaultQuestionnaire.map(_.toView(questions))
+  }
+
+
 }

@@ -8,6 +8,8 @@ trait QuestionsService {
 
   def registerQuestionnaire: Option[Questionnaire]
 
+  def defaultQuestionnaire: Option[Questionnaire]
+
   def addQuestion(question: CreateQuestionRequest): Unit
 
   def addQuestionnaire(request: CreateQuestionnaireRequest): Unit

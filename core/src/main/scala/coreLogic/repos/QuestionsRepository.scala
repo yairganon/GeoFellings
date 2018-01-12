@@ -14,4 +14,6 @@ trait QuestionsRepository {
 
   def registerQuestionnaire: Option[Questionnaire]
 
+  def defaultQuestionnaire: Option[Questionnaire]
+
 }

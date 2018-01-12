@@ -21,4 +21,6 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def getQuestionnaires: Seq[Questionnaire] = questionnaireRepo.values.toSeq
 
   override def registerQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isRegistration)
+
+  override def defaultQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isDefault)
 }
