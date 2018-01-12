@@ -28,14 +28,16 @@ case class QuestionnaireAnswer(userId: UserId,
                                answers: Seq[QuestionAnswer])
 
 
-case class QuestionWithAnswersDto(id: QuestionId,
+case class QuestionWithAnswersDto(id: String,
                                   questionType: QuestionType,
                                   questionString: String,
                                   numOfOptions: Option[Int],
                                   answer: String)
 
-case class QuestionnaireWithAnswersDto(id: QuestionnaireId,
+case class QuestionnaireWithAnswersDto(id: String,
                                        name: String,
+                                       location: Option[Location],
+                                       submitTime: DateTime,
                                        isRegistration: Boolean,
                                        isDefault: Boolean,
                                        questions: Seq[QuestionWithAnswersDto])

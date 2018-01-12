@@ -20,7 +20,7 @@ case class QuestionnaireView(id: String,
                              isDefault: Boolean,
                              questions: Seq[QuestionView])
 
-case class UserView(userId: UserId,
+case class UserView(userId: String,
                     userName: String,
                     gender: Gender,
                     age: Int)

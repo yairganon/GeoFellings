@@ -28,7 +28,7 @@ object ToViews {
 
     def toView: UserView = {
       UserView(
-        userId = user.userId,
+        userId = user.userId.getId,
         userName = user.userName,
         gender = user.gender,
         age = user.age

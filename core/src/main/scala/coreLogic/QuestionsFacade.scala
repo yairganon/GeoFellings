@@ -54,13 +54,16 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
       .map(questionnaireAnswer => {
         val questionnaire = questionsRepository.getQuestionnaire(questionnaireAnswer.questionnaireId)
         QuestionnaireWithAnswersDto(
-          questionnaire.id,
-          questionnaire.name, questionnaire.isRegistration,
+          questionnaire.id.getId,
+          questionnaire.name,
+          questionnaireAnswer.location,
+          questionnaireAnswer.time,
+          questionnaire.isRegistration,
           questionnaire.isDefault,
           questionnaireAnswer.answers.map(questionnaireAnswer => {
             val question = questionsRepository.getQuestion(questionnaireAnswer.id)
             QuestionWithAnswersDto(
-              question.id,
+              question.id.getId,
               question.`type`,
               question.questionString,
               question.numOfOptions,
