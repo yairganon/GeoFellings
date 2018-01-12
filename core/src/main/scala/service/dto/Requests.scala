@@ -1,7 +1,7 @@
 package service.dto
 
 import enums.{Gender, QuestionType}
-import util.QuestionId
+import util.{QuestionId, QuestionnaireId}
 
 case class RegisterTokenRequest(token: String)
 
@@ -21,6 +21,8 @@ case class UserRegisterRequest(userName: String,
                                password: String,
                                gender: Gender,
                                age: Int,
-                               questionnaireAnswer: Option[Seq[QuestionAnswer]])
+                               questionnaireAnswer: Option[QuestionnaireAnswer])
 
 case class TwitterTokens(accessToken: String, accessTokenSecret: String)
+
+case class QuestionnaireAnswer(id: QuestionnaireId, answers: Seq[QuestionAnswer])
