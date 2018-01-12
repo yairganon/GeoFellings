@@ -1,6 +1,8 @@
 package spring.controllers
 
 import coreLogic.repos.UsersRepository
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.QuestionsService
@@ -51,10 +53,9 @@ class AdminController(questionsService: QuestionsService,
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("user/{userId}"))
   @ResponseBody
   def getUser(@PathVariable("userId") userId: UserId): FullUserView = {
-    questionsService.getUserQuestionnaires(userId)
     val user = usersRepository.get(userId)
     FullUserView(
-      user.userId,
+      user.userId.getId,
       user.userName,
       user.gender,
       user.age,

@@ -37,7 +37,7 @@ case class QuestionWithAnswersDto(id: String,
 case class QuestionnaireWithAnswersDto(id: String,
                                        name: String,
                                        location: Option[Location],
-                                       submitTime: DateTime,
+                                       formattedTime: String,
                                        isRegistration: Boolean,
                                        isDefault: Boolean,
                                        questions: Seq[QuestionWithAnswersDto])

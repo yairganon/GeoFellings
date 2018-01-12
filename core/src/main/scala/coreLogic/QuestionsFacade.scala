@@ -2,6 +2,7 @@ package coreLogic
 
 import coreLogic.repos.QuestionsRepository
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import service.api.QuestionsService
 import service.dto._
 import util.{QuestionnaireId, UserId}
@@ -57,7 +58,7 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
           questionnaire.id.getId,
           questionnaire.name,
           questionnaireAnswer.location,
-          questionnaireAnswer.time,
+          questionnaireAnswer.time.toString(DateTimeFormat.forPattern("d MMMM, yyyy 'at' HH:mm")),
           questionnaire.isRegistration,
           questionnaire.isDefault,
           questionnaireAnswer.answers.map(questionnaireAnswer => {
