@@ -29,3 +29,20 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
     thirdPartyService.twitterTokens(userId)
   }
 }
+
+@Controller
+@RequestMapping(Array("/webhook"))
+class ThirdPartyWebHooksController() {
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("twitter"))
+  @ResponseBody
+  def twitterPostNotification(@RequestBody request: Map[String, String]): Unit = {
+    println(request)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("twitter"))
+  @ResponseBody
+  def twitterGetNotification(@RequestBody request: Map[String, String]): Unit = {
+    println(request)
+  }
+}
