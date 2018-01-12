@@ -6,6 +6,8 @@ trait QuestionsService {
 
   def getAll: Seq[Question]
 
+  def registerQuestionnaire: Option[Questionnaire]
+
   def addQuestion(question: CreateQuestionRequest): Unit
 
   def addQuestionnaire(request: CreateQuestionnaireRequest): Unit

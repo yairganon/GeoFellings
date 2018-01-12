@@ -32,4 +32,6 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
   override def getQuestionnaires: Seq[Questionnaire] = {
     questionsRepository.getQuestionnaires
   }
+
+  override def registerQuestionnaire: Option[Questionnaire] = questionsRepository.registerQuestionnaire
 }

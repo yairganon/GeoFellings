@@ -19,4 +19,6 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def add(questionnaire: Questionnaire): Unit = questionnaireRepo += questionnaire.id -> questionnaire
 
   override def getQuestionnaires: Seq[Questionnaire] = questionnaireRepo.values.toSeq
+
+  override def registerQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isRegistration)
 }

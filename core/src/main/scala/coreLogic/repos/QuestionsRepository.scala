@@ -12,4 +12,6 @@ trait QuestionsRepository {
 
   def getQuestionnaires: Seq[Questionnaire]
 
+  def registerQuestionnaire: Option[Questionnaire]
+
 }

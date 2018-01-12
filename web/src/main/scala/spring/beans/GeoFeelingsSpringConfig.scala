@@ -77,4 +77,10 @@ class GeoFeelingsSpringConfig {
   def thirdPartyService: ThirdPartyService = {
     new ThirdPartyFacade()
   }
+
+  @Bean
+  def usersRegistrationController(registrationService: RegistrationService,
+                                  questionsService: QuestionsService): UsersRegistrationController = {
+    new UsersRegistrationController(registrationService, questionsService)
+  }
 }
