@@ -23,8 +23,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
       .add(Questionnaire(
         id = QuestionnaireId.random,
         name = request.name,
-        isRegistration = false,
-        isDefault = false,
+        isRegistration = request.isRegistration,
+        isDefault = request.isDefault,
         questions = request.ids
       ))
   }

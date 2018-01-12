@@ -11,7 +11,7 @@ case class CreateQuestionRequest(questionType: QuestionType, data: CreateQuestio
 
 case class CreateQuestionData(questionString: String, numOfOptions: Option[Int])
 
-case class CreateQuestionnaireRequest(name: String, ids: Seq[QuestionId])
+case class CreateQuestionnaireRequest(name: String, isRegistration: Boolean, isDefault: Boolean, ids: Seq[QuestionId])
 
 case class UserLoginRequest(userName: String, password: String)
 
