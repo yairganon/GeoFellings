@@ -42,7 +42,7 @@ class ThirdPartyWebHooksController() {
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("twitter"))
   @ResponseBody
-  def twitterGetNotification(@RequestBody request: Map[String, String]): Unit = {
-    println(request)
+  def twitterGetNotification(@RequestParam(value = "crc_token", required = true) crcToken: String): Unit = {
+    println(crcToken)
   }
 }
