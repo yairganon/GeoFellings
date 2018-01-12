@@ -10,7 +10,7 @@ import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import service.api.{QuestionsService, RegistrationService, ThirdPartyService}
-import spring.controllers.{AdminController, RootController, UsersController}
+import spring.controllers.{AdminController, RootController, AppUsersController}
 
 @org.springframework.context.annotation.Configuration
 class GeoFeelingsSpringConfig {
@@ -79,8 +79,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def usersRegistrationController(registrationService: RegistrationService,
-                                  questionsService: QuestionsService): UsersController = {
-    new UsersController(registrationService, questionsService)
+  def appUsersController(registrationService: RegistrationService,
+                         questionsService: QuestionsService): AppUsersController = {
+    new AppUsersController(registrationService, questionsService)
   }
 }

@@ -9,8 +9,8 @@ import views.ToViews._
 
 @Controller
 @RequestMapping(Array("/api/user"))
-class UsersController(registrationService: RegistrationService,
-                      questionsService: QuestionsService) {
+class AppUsersController(registrationService: RegistrationService,
+                         questionsService: QuestionsService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("login"))
   @ResponseBody
