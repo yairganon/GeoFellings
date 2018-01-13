@@ -6,7 +6,7 @@ import service.api.{QuestionsService, RegistrationService}
 import service.dto.{QuestionnaireAnswerRequest, UserLoginRequest, UserRegisterRequest}
 import util.UserId
 import views.ToViews._
-import views.{QuestionnaireView, RegisterStatusView}
+import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView}
 
 @Controller
 @RequestMapping(Array("/api/user"))
@@ -37,6 +37,12 @@ class AppUsersController(registrationService: RegistrationService,
   def defaultQuestionnaire(): Option[QuestionnaireView] = {
     val questions = questionsService.getAll
     questionsService.defaultQuestionnaire.map(_.toView(questions))
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("questionnaire/waiting"))
+  @ResponseBody
+  def haveWaitingQuestionnaire(@RequestHeader(value = "userId") userId: UserId): QuestionnairesIdView = {
+    QuestionnairesIdView(questionsService.getWaitingQuestionnaireForUser(userId).map(_.getId))
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("questionnaire/submit"))

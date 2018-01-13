@@ -2,13 +2,14 @@ package spring
 
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import service.api.ThirdPartyService
+import service.api.{QuestionsService, ThirdPartyService}
 import util.UserId
 
 import scala.collection.mutable
 
 @Component
-class ScheduleTasks(thirdPartyService: ThirdPartyService) {
+class ScheduleTasks(thirdPartyService: ThirdPartyService,
+                    questionsService: QuestionsService) {
 
   val repo = mutable.HashMap.empty[UserId, String]
 
@@ -18,7 +19,10 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService) {
     thirdPartyService.usersLastTweet().foreach{case (uId, tId) =>
       repo.get(uId) match {
         case None => repo += uId -> tId
-        case Some(oldTweet) if oldTweet != tId => println("New Tweet!!")
+        case Some(oldTweet) if oldTweet != tId =>
+          repo += uId -> tId
+          questionsService.addQuestionnaireTo(uId)
+          println("New Tweet!!")
         case _ =>
       }
     }
