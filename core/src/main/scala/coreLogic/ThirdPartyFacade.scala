@@ -1,5 +1,6 @@
 package coreLogic
 
+import gcm.http.TwitterRest
 import service.api.ThirdPartyService
 import service.dto.TwitterTokens
 import util.UserId
@@ -16,4 +17,12 @@ class ThirdPartyFacade() extends ThirdPartyService{
   override def twitterTokens(userId: UserId): Option[TwitterTokens] = repo.get(userId)
 
   override def removeTokens(userId: UserId): Unit = repo.remove(userId)
+
+  override def userTweet(userId: UserId): Option[String] = {
+    for {
+      userTokens <- twitterTokens(userId)
+      userId = userTokens.id
+      userTweet <- TwitterRest.lastTweetOf(userId)
+    } yield userTweet
+  }
 }

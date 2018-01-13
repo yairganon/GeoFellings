@@ -24,6 +24,7 @@ lazy val core = (project in file("core"))
         "com.typesafe.akka" %% "akka-testkit" % akkaV % "test"
       )
     },
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.3",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7",
     libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.7",
     libraryDependencies += "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.8.7",
@@ -37,7 +38,6 @@ lazy val web = (project in file("web"))
   .settings(
     name := "web",
     libraryDependencies += scalaTest % Test,
-    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.3",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springVersion,
     libraryDependencies ++= Seq("org.specs2" %% "specs2-core" % "4.0.0" % "test"))
 

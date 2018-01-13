@@ -3,11 +3,12 @@ package coreLogic
 import coreLogic.repos.QuestionsRepository
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import service.api.QuestionsService
+import service.api.{QuestionsService, ThirdPartyService}
 import service.dto._
 import util.{QuestionnaireId, UserId}
 
-class QuestionsFacade(questionsRepository: QuestionsRepository) extends QuestionsService {
+class QuestionsFacade(questionsRepository: QuestionsRepository,
+                      thirdPartyFacade: ThirdPartyService) extends QuestionsService {
 
   override def addQuestion(questionRequest: CreateQuestionRequest): Unit = {
     val question = Question(
@@ -45,7 +46,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
       request.id,
       submitTime,
       request.location,
-      request.answers
+      request.answers,
+      thirdPartyFacade.userTweet(userId)
     ))
   }
 
@@ -61,6 +63,7 @@ class QuestionsFacade(questionsRepository: QuestionsRepository) extends Question
           questionnaireAnswer.time.toString(DateTimeFormat.forPattern("d MMMM, yyyy 'at' HH:mm")),
           questionnaire.isRegistration,
           questionnaire.isDefault,
+          questionnaireAnswer.lastTweet,
           questionnaireAnswer.answers.map(questionnaireAnswer => {
             val question = questionsRepository.getQuestion(questionnaireAnswer.id)
             QuestionWithAnswersDto(

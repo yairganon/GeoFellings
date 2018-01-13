@@ -10,4 +10,6 @@ trait ThirdPartyService {
   def twitterTokens(userId: UserId): Option[TwitterTokens]
 
   def removeTokens(userId: UserId): Unit
+
+  def userTweet(userId: UserId): Option[String]
 }

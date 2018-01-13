@@ -52,8 +52,9 @@ class GeoFeelingsSpringConfig {
   def questionsRepository(): QuestionsRepository = new InMemoryQuestionRepo
 
   @Bean
-  def questionsService(questionsRepository: QuestionsRepository): QuestionsService = {
-    new QuestionsFacade(questionsRepository)
+  def questionsService(questionsRepository: QuestionsRepository,
+                       thirdPartyService: ThirdPartyService): QuestionsService = {
+    new QuestionsFacade(questionsRepository, thirdPartyService)
   }
 
   @Bean

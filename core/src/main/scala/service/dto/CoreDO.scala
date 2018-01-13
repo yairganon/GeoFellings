@@ -25,7 +25,8 @@ case class QuestionnaireAnswer(userId: UserId,
                                questionnaireId: QuestionnaireId,
                                time: DateTime,
                                location: Option[Location],
-                               answers: Seq[QuestionAnswer])
+                               answers: Seq[QuestionAnswer],
+                               lastTweet: Option[String])
 
 
 case class QuestionWithAnswersDto(id: String,
@@ -40,4 +41,5 @@ case class QuestionnaireWithAnswersDto(id: String,
                                        formattedTime: String,
                                        isRegistration: Boolean,
                                        isDefault: Boolean,
+                                       lastTweet: Option[String],
                                        questions: Seq[QuestionWithAnswersDto])
