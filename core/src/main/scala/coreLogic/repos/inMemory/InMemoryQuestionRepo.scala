@@ -30,6 +30,11 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def defaultQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isDefault)
 
   override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = {
+    if(userQuestionnaireRepo
+      .get(questionnaireAnswer.userId)
+      .contains(questionnaireAnswer.questionnaireId)){
+      userQuestionnaireRepo.remove(questionnaireAnswer.userId)
+    }
     questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId) -> questionnaireAnswer
   }
 

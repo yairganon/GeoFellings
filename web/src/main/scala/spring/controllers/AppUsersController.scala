@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, RegistrationService}
 import service.dto.{QuestionnaireAnswerRequest, UserLoginRequest, UserRegisterRequest}
-import util.UserId
+import util.{QuestionnaireId, UserId}
 import views.ToViews._
 import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView}
 
@@ -50,6 +50,14 @@ class AppUsersController(registrationService: RegistrationService,
   def submit(@RequestBody request: QuestionnaireAnswerRequest,
              @RequestHeader(value = "userId") userId: UserId): Unit = {
     questionsService.submit(userId, request)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("questionnaire/{id}"))
+  @ResponseBody
+  def getQuestionnaire(@PathVariable("id") questionnaireId: QuestionnaireId,
+                       @RequestHeader(value = "userId") userId: UserId): QuestionnaireView = {
+    val questions = questionsService.getAll
+    questionsService.getQuestionnaire(questionnaireId).toView(questions)
   }
 
 }

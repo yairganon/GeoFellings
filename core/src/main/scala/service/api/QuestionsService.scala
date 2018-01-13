@@ -6,6 +6,9 @@ import util.{QuestionnaireId, UserId}
 
 trait QuestionsService {
 
+  def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire
+
+
   def getUserQuestionnaires(userId: UserId): Seq[QuestionnaireWithAnswersDto]
 
 

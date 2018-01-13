@@ -86,4 +86,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
   override def getWaitingQuestionnaireForUser(userId: UserId): Option[QuestionnaireId] = {
     questionsRepository.getWaitingQuestionnaireFor(userId)
   }
+
+  override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = {
+    questionsRepository.getQuestionnaire(questionnaireId)
+  }
 }
