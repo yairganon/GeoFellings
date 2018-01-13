@@ -1,7 +1,7 @@
 package gcm.http
 
 import com.danielasfregola.twitter4s.TwitterRestClient
-import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken}
+import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken, Tweet}
 import util.Utils._
 
 import scala.util.Try
@@ -12,11 +12,11 @@ object TwitterRest {
   val accessToken = AccessToken(key = Config.TwitterAccessToken, secret = Config.TwitterSecretAccessTokenSecret)
   val restClient = TwitterRestClient(consumerToken, accessToken)
 
-  def lastTweetOf(userId: Long): Option[String] = {
+  def lastTweetOf(userId: Long): Option[Tweet] = {
     Try(restClient.userTimelineForUserId(userId, count = 1)
       .awaitResult
       .data
-      .headOption.map(_.text)).getOrElse(None)
+      .headOption).getOrElse(None)
   }
 }
 

@@ -1,6 +1,7 @@
 package coreLogic
 
 import gcm.http.TwitterRest
+import org.joda.time.DateTime
 import service.api.ThirdPartyService
 import service.dto.TwitterTokens
 import util.UserId
@@ -23,6 +24,13 @@ class ThirdPartyFacade() extends ThirdPartyService{
       userTokens <- twitterTokens(userId)
       userId = userTokens.id
       userTweet <- TwitterRest.lastTweetOf(userId)
-    } yield userTweet
+    } yield userTweet.text
+  }
+
+  override def usersLastTweet(): Seq[(UserId, String)] = {
+    for {
+      (userId, tokens) <- repo.toSeq
+      tweet <- TwitterRest.lastTweetOf(tokens.id)
+    } yield (userId, tweet.id_str)
   }
 }

@@ -1,5 +1,6 @@
 package service.api
 
+import org.joda.time.DateTime
 import service.dto.TwitterTokens
 import util.UserId
 
@@ -12,4 +13,6 @@ trait ThirdPartyService {
   def removeTokens(userId: UserId): Unit
 
   def userTweet(userId: UserId): Option[String]
+
+  def usersLastTweet(): Seq[(UserId, String)]
 }
