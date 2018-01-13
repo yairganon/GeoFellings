@@ -12,9 +12,10 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("twitter"))
   @ResponseBody
-  def saveTwitterTokens(@RequestBody request: TwitterTokens,
+  def saveTwitterTokens(@RequestBody request: Map[String, String],
                         @RequestHeader(value = "userId") userId: UserId): Unit = {
-    thirdPartyService.storeTwitterTokens(userId, request)
+//    thirdPartyService.storeTwitterTokens(userId, request)
+    println(request)
   }
 
   @RequestMapping(method = Array(RequestMethod.DELETE), value = Array("twitter"))

@@ -37,6 +37,7 @@ lazy val web = (project in file("web"))
   .settings(
     name := "web",
     libraryDependencies += scalaTest % Test,
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.3",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springVersion,
     libraryDependencies ++= Seq("org.specs2" %% "specs2-core" % "4.0.0" % "test"))
 

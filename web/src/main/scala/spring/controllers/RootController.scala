@@ -28,6 +28,7 @@ class RootController(
   @RequestMapping(method = Array(GET), value = Array("/sendNotificationToAll"))
   @ResponseBody
   def sendNotificationToAll(): Unit = {
-    notificationService.sendToAllDummy()
+    TwitterStream
+//    notificationService.sendToAllDummy()
   }
 }
