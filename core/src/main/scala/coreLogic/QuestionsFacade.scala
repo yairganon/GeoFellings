@@ -83,11 +83,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
       )
   }
 
-  override def addQuestionnaireTo(userId: UserId): Unit = {
-    Random.shuffle(questionsRepository.getQuestionnaires)
-      .headOption
-      .map(_.id)
-      .foreach(notificationsRepository.addNotificationTo(userId, _))
+  override def addQuestionnaireTo(userId: UserId, questionnaireId: QuestionnaireId): Unit = {
+    notificationsRepository.addNotificationTo(userId, questionnaireId)
   }
 
   override def getWaitingQuestionnaireForUser(userId: UserId): Set[QuestionnaireId] = {

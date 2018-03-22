@@ -44,3 +44,9 @@ case class QuestionnaireWithAnswersDto(id: String,
                                        isDefault: Boolean,
                                        lastTweet: Option[String],
                                        questions: Seq[QuestionWithAnswersDto])
+
+case class Trigger(triggerName: String,
+                   questionnaireId: QuestionnaireId,
+                   locationTrigger: Option[LocationTrigger],
+                   socialNetworkTrigger: Option[SocialNetworkTrigger],
+                   timeRangeTrigger: Option[TimeRangeTrigger])

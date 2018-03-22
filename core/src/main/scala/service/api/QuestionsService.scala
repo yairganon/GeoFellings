@@ -26,7 +26,7 @@ trait QuestionsService {
 
   def submit(userId: UserId, request: QuestionnaireAnswerRequest, submitTime: DateTime = DateTime.now): Unit
 
-  def addQuestionnaireTo(userId: UserId): Unit
+  def addQuestionnaireTo(userId: UserId, questionnaireId: QuestionnaireId): Unit
 
   def getWaitingQuestionnaireForUser(userId: UserId): Set[QuestionnaireId]
 }

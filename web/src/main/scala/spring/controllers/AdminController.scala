@@ -3,7 +3,7 @@ package spring.controllers
 import coreLogic.repos.UsersRepository
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
-import service.api.QuestionsService
+import service.api.{QuestionsService, TriggerService}
 import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest, CreateTriggerRequest}
 import util.UserId
 import views.ToViews._
@@ -12,7 +12,8 @@ import views._
 @Controller
 @RequestMapping(Array("/api/admin"))
 class AdminController(questionsService: QuestionsService,
-                      usersRepository: UsersRepository) {
+                      usersRepository: UsersRepository,
+                      triggerService: TriggerService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("question"))
   @ResponseBody
@@ -64,6 +65,6 @@ class AdminController(questionsService: QuestionsService,
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("trigger"))
   @ResponseBody
   def createTrigger(@RequestBody request: CreateTriggerRequest): Unit = {
-    println(request)
+    triggerService.addTrigger(request)
   }
 }

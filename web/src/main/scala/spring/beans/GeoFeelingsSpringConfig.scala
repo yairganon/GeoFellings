@@ -3,13 +3,13 @@ package spring.beans
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import coreLogic.{LogInUserFacade, QuestionsFacade, RegistrationFacade, ThirdPartyFacade}
+import coreLogic._
 import coreLogic.repos._
-import coreLogic.repos.inMemory.{InMemoryNotificationsRepo, InMemoryQuestionRepo, InMemoryTokenRepo, InMemoryUsersRepo}
+import coreLogic.repos.inMemory._
 import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{QuestionsService, RegistrationService, ThirdPartyService, UserService}
+import service.api._
 import spring.ScheduleTasks
 import spring.controllers.{AdminController, AppUsersController, RootController}
 
@@ -60,9 +60,20 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
+  def triggerRepository: TriggerRepository = {
+    new InMemoryTriggerRepo
+  }
+
+  @Bean
+  def triggerService(triggerRepository: TriggerRepository): TriggerService = {
+    new TriggerFacade(triggerRepository)
+  }
+
+  @Bean
   def adminController(questionsService: QuestionsService,
-                      usersRepository: UsersRepository): AdminController = {
-    new AdminController(questionsService, usersRepository)
+                      usersRepository: UsersRepository,
+                      triggerService: TriggerService): AdminController = {
+    new AdminController(questionsService, usersRepository, triggerService)
   }
 
   @Bean
@@ -79,8 +90,9 @@ class GeoFeelingsSpringConfig {
 
   @Bean
   def scheduleTasks(thirdPartyService: ThirdPartyService,
-                    questionsService: QuestionsService): ScheduleTasks ={
-    new ScheduleTasks(thirdPartyService, questionsService)
+                    questionsService: QuestionsService,
+                    triggerService: TriggerService): ScheduleTasks ={
+    new ScheduleTasks(thirdPartyService, questionsService, triggerService)
   }
 
   @Bean
