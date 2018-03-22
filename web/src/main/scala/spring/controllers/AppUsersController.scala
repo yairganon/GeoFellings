@@ -1,5 +1,6 @@
 package spring.controllers
 
+import coreLogic.repos.UsersRepository
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
 import org.springframework.web.bind.annotation._
@@ -7,13 +8,14 @@ import service.api.{QuestionsService, RegistrationService, UserService}
 import service.dto.{QuestionnaireAnswerRequest, UpdateUserRequest, UserLoginRequest, UserRegisterRequest}
 import util.{QuestionnaireId, UserId}
 import views.ToViews._
-import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView}
+import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView, UserView}
 
 @Controller
 @RequestMapping(Array("/api/user"))
 class AppUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
-                         userService: UserService) {
+                         userService: UserService,
+                         usersRepository: UsersRepository) {
 
   @RequestMapping(method = Array(POST), value = Array("login"))
   @ResponseBody
@@ -67,6 +69,12 @@ class AppUsersController(registrationService: RegistrationService,
   def updateUser(@RequestBody request: UpdateUserRequest,
                  @RequestHeader(value = "userId") userId: UserId): Unit = {
     userService.patchUser(userId, request)
+  }
+
+  @RequestMapping(method = Array(GET), value = Array(""))
+  @ResponseBody
+  def getUser(@RequestHeader(value = "userId") userId: UserId): UserView = {
+    usersRepository.get(userId).toView
   }
 
 }

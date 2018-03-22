@@ -101,7 +101,8 @@ class GeoFeelingsSpringConfig {
   @Bean
   def appUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
-                         userService: UserService): AppUsersController = {
-    new AppUsersController(registrationService, questionsService, userService)
+                         userService: UserService,
+                         usersRepository: UsersRepository): AppUsersController = {
+    new AppUsersController(registrationService, questionsService, userService, usersRepository)
   }
 }
