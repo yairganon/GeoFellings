@@ -1,12 +1,10 @@
 package spring.controllers
 
 import coreLogic.repos.UsersRepository
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.QuestionsService
-import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest}
+import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest, CreateTriggerRequest}
 import util.UserId
 import views.ToViews._
 import views._
@@ -61,5 +59,11 @@ class AdminController(questionsService: QuestionsService,
       user.age,
       questionsService.getUserQuestionnaires(userId)
     )
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("trigger"))
+  @ResponseBody
+  def createTrigger(@RequestBody request: CreateTriggerRequest): Unit = {
+    println(request)
   }
 }

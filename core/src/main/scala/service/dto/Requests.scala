@@ -31,3 +31,16 @@ case class UpdateUserRequest(location: Option[Location],
                              limitQuestionnaire: Option[LimitQuestionnaire])
 
 case class LimitQuestionnaire(limit: Option[Int])
+
+
+case class LocationTrigger(location: Location, radius: Int)
+
+case class SocialNetworkTrigger(onNewActivity: Boolean)
+
+case class TimeRangeTrigger(from: String, to: String)
+
+case class CreateTriggerRequest(triggerName: String,
+                                questionnaireId: QuestionnaireId,
+                                locationTrigger: Option[LocationTrigger],
+                                socialNetworkTrigger: Option[SocialNetworkTrigger],
+                                timeRangeTrigger: Option[TimeRangeTrigger])
