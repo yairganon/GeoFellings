@@ -28,6 +28,6 @@ trait QuestionsService {
 
   def addQuestionnaireTo(userId: UserId): Unit
 
-  def getWaitingQuestionnaireForUser(userId: UserId): Option[QuestionnaireId]
+  def getWaitingQuestionnaireForUser(userId: UserId): Set[QuestionnaireId]
 }
 

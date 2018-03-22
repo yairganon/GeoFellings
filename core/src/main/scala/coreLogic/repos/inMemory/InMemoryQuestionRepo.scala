@@ -11,7 +11,6 @@ class InMemoryQuestionRepo extends QuestionsRepository {
 
   val questionRepo = mutable.HashMap.empty[QuestionId, Question]
 
-  val userQuestionnaireRepo = mutable.HashMap.empty[UserId, QuestionnaireId]
 
   val questionnaireRepo = mutable.HashMap.empty[QuestionnaireId, Questionnaire]
 
@@ -30,11 +29,6 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def defaultQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isDefault)
 
   override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = {
-    if(userQuestionnaireRepo
-      .get(questionnaireAnswer.userId)
-      .contains(questionnaireAnswer.questionnaireId)){
-      userQuestionnaireRepo.remove(questionnaireAnswer.userId)
-    }
     questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId) -> questionnaireAnswer
   }
 
@@ -44,11 +38,4 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = questionnaireRepo(questionnaireId)
 
   override def getQuestion(questionId: QuestionId): Question = questionRepo(questionId)
-
-  override def addQuestionnaireTo(userId: UserId): Unit = {
-    Random.shuffle(questionnaireRepo.keySet)
-      .headOption.foreach(id => userQuestionnaireRepo += userId -> id)
-  }
-
-  override def getWaitingQuestionnaireFor(userId: UserId): Option[QuestionnaireId] = userQuestionnaireRepo.get(userId)
 }

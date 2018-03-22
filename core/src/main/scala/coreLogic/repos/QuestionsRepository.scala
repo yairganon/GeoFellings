@@ -5,9 +5,6 @@ import util.{QuestionId, QuestionnaireId, UserId}
 
 trait QuestionsRepository {
 
-  def addQuestionnaireTo(userId: UserId): Unit
-
-
   def add(question: Question): Unit
 
   def add(questionnaire: Questionnaire): Unit
@@ -25,8 +22,6 @@ trait QuestionsRepository {
   def getAnswers(userId: UserId): Seq[QuestionnaireAnswer]
 
   def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire
-
-  def getWaitingQuestionnaireFor(userId: UserId): Option[QuestionnaireId]
 
   def getQuestion(questionId: QuestionId): Question
 }

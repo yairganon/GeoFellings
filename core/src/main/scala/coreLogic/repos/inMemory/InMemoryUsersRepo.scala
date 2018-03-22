@@ -38,7 +38,7 @@ class InMemoryUsersRepo extends UsersRepository {
   override def getUserLastLocation(userId: UserId): Option[Location] = {
 
     locationRepo.collect{case ((`userId`, time), location) =>  (time, location)}.toSeq match {
-      case Seq.empty => None
+      case Nil => None
       case l => Some(l.maxBy(_._1)._2)
     }
   }

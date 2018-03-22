@@ -13,7 +13,7 @@ case class RegisterStatusView(status: RegisterStatus)
 
 case class QuestionnairesView(questionnaires: Seq[QuestionnaireView])
 
-case class QuestionnairesIdView(id: Option[String])
+case class QuestionnairesIdView(ids: Set[String])
 
 case class QuestionnaireView(id: String,
                              name: String,

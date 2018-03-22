@@ -1,14 +1,17 @@
 package coreLogic
 
-import coreLogic.repos.QuestionsRepository
+import coreLogic.repos.{NotificationsRepository, QuestionsRepository}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import service.api.{QuestionsService, ThirdPartyService}
 import service.dto._
 import util.{QuestionnaireId, UserId}
 
+import scala.util.Random
+
 class QuestionsFacade(questionsRepository: QuestionsRepository,
-                      thirdPartyFacade: ThirdPartyService) extends QuestionsService {
+                      thirdPartyFacade: ThirdPartyService,
+                      notificationsRepository: NotificationsRepository) extends QuestionsService {
 
   override def addQuestion(questionRequest: CreateQuestionRequest): Unit = {
     val question = Question(
@@ -41,6 +44,7 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
   override def defaultQuestionnaire: Option[Questionnaire] = questionsRepository.defaultQuestionnaire
 
   override def submit(userId: UserId, request: QuestionnaireAnswerRequest, submitTime: DateTime): Unit = {
+    notificationsRepository.completeNotification(userId, request.id)
     questionsRepository.submit(QuestionnaireAnswer(
       userId,
       request.id,
@@ -80,11 +84,14 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
   }
 
   override def addQuestionnaireTo(userId: UserId): Unit = {
-    questionsRepository.addQuestionnaireTo(userId)
+    Random.shuffle(questionsRepository.getQuestionnaires)
+      .headOption
+      .map(_.id)
+      .foreach(notificationsRepository.addNotificationTo(userId, _))
   }
 
-  override def getWaitingQuestionnaireForUser(userId: UserId): Option[QuestionnaireId] = {
-    questionsRepository.getWaitingQuestionnaireFor(userId)
+  override def getWaitingQuestionnaireForUser(userId: UserId): Set[QuestionnaireId] = {
+    notificationsRepository.getPendingUserNotifications(userId)
   }
 
   override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = {

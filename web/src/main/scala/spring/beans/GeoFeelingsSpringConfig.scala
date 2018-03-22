@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import coreLogic.{LogInUserFacade, QuestionsFacade, RegistrationFacade, ThirdPartyFacade}
-import coreLogic.repos.{NotificationService, NotificationTokenRepository, QuestionsRepository, UsersRepository}
-import coreLogic.repos.inMemory.{InMemoryQuestionRepo, InMemoryTokenRepo, InMemoryUsersRepo}
+import coreLogic.repos._
+import coreLogic.repos.inMemory.{InMemoryNotificationsRepo, InMemoryQuestionRepo, InMemoryTokenRepo, InMemoryUsersRepo}
 import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
@@ -54,8 +54,9 @@ class GeoFeelingsSpringConfig {
 
   @Bean
   def questionsService(questionsRepository: QuestionsRepository,
-                       thirdPartyService: ThirdPartyService): QuestionsService = {
-    new QuestionsFacade(questionsRepository, thirdPartyService)
+                       thirdPartyService: ThirdPartyService,
+                       notificationsRepository: NotificationsRepository): QuestionsService = {
+    new QuestionsFacade(questionsRepository, thirdPartyService, notificationsRepository)
   }
 
   @Bean
@@ -90,6 +91,11 @@ class GeoFeelingsSpringConfig {
   @Bean
   def userService(usersRepository: UsersRepository): UserService = {
     new LogInUserFacade(usersRepository)
+  }
+
+  @Bean
+  def notificationsRepository: NotificationsRepository = {
+    new InMemoryNotificationsRepo
   }
 
   @Bean
