@@ -24,7 +24,8 @@ case class QuestionnaireView(id: String,
 case class UserView(userId: String,
                     userName: String,
                     gender: Gender,
-                    age: Int)
+                    age: Int,
+                    limitQuestionnaire: Option[Int])
 
 
 case class FullUserView(userId: String,

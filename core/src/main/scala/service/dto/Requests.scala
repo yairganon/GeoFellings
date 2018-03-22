@@ -26,3 +26,8 @@ case class UserRegisterRequest(userName: String,
 case class TwitterTokens(accessToken: String, accessTokenSecret: String, id: Long, name: String)
 
 case class QuestionnaireAnswerRequest(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
+
+case class UpdateUserRequest(location: Option[Location],
+                             limitQuestionnaire: Option[LimitQuestionnaire])
+
+case class LimitQuestionnaire(limit: Option[Int])

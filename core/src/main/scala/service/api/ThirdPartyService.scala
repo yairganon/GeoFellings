@@ -1,6 +1,5 @@
 package service.api
 
-import org.joda.time.DateTime
 import service.dto.TwitterTokens
 import util.UserId
 

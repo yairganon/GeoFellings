@@ -31,7 +31,8 @@ object ToViews {
         userId = user.userId.getId,
         userName = user.userName,
         gender = user.gender,
-        age = user.age
+        age = user.age,
+        limitQuestionnaire = user.limitQuestionnaire
       )
     }
   }

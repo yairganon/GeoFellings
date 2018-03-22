@@ -3,13 +3,13 @@ package spring.beans
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
-import coreLogic.{QuestionsFacade, RegistrationFacade, ThirdPartyFacade}
+import coreLogic.{LogInUserFacade, QuestionsFacade, RegistrationFacade, ThirdPartyFacade}
 import coreLogic.repos.{NotificationService, NotificationTokenRepository, QuestionsRepository, UsersRepository}
 import coreLogic.repos.inMemory.{InMemoryQuestionRepo, InMemoryTokenRepo, InMemoryUsersRepo}
 import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import service.api.{QuestionsService, RegistrationService, ThirdPartyService}
+import service.api.{QuestionsService, RegistrationService, ThirdPartyService, UserService}
 import spring.ScheduleTasks
 import spring.controllers.{AdminController, AppUsersController, RootController}
 
@@ -88,8 +88,14 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
+  def userService(usersRepository: UsersRepository): UserService = {
+    new LogInUserFacade(usersRepository)
+  }
+
+  @Bean
   def appUsersController(registrationService: RegistrationService,
-                         questionsService: QuestionsService): AppUsersController = {
-    new AppUsersController(registrationService, questionsService)
+                         questionsService: QuestionsService,
+                         userService: UserService): AppUsersController = {
+    new AppUsersController(registrationService, questionsService, userService)
   }
 }

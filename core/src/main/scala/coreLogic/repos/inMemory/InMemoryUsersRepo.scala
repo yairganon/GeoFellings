@@ -2,7 +2,8 @@ package coreLogic.repos.inMemory
 
 import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
-import service.dto.User
+import org.joda.time.DateTime
+import service.dto.{Location, User}
 import util.UserId
 
 import scala.collection.mutable
@@ -10,6 +11,7 @@ import scala.collection.mutable
 class InMemoryUsersRepo extends UsersRepository {
 
   val repo = mutable.HashMap.empty[(UserId, String, String), User]
+  val locationRepo = mutable.HashMap.empty[(UserId, Long), Location]
 
   override def add(user: User): RegisterStatus = {
     isExist(user.userName, user.password) match {
@@ -26,4 +28,18 @@ class InMemoryUsersRepo extends UsersRepository {
     repo.collectFirst { case ((uId, `userName`, `passWord`), _) => uId }
 
   override def getAll: Seq[User] = repo.values.toSeq
+
+  override def update(user: User): Unit = repo += ((user.userId, user.userName, user.password) -> user)
+
+  override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {
+    locationRepo += (userId, DateTime.now.getMillis) -> location
+  }
+
+  override def getUserLastLocation(userId: UserId): Option[Location] = {
+
+    locationRepo.collect{case ((`userId`, time), location) =>  (time, location)}.toSeq match {
+      case Seq.empty => None
+      case l => Some(l.maxBy(_._1)._2)
+    }
+  }
 }

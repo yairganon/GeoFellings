@@ -9,7 +9,7 @@ import util.UserId
 class RegistrationFacade(registrationRepo: UsersRepository) extends RegistrationService {
 
   override def registerUser(request: UserRegisterRequest): RegisterStatus = {
-    registrationRepo.add(User(UserId.random, request.userName, request.password, request.gender, request.age))
+    registrationRepo.add(User(UserId.random, request.userName, request.password, request.gender, request.age, None))
   }
 
   override def loginUser(request: UserLoginRequest): Option[UserId] = {

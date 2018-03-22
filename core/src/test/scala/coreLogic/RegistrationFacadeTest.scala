@@ -29,7 +29,8 @@ class RegistrationFacadeTest extends Specification {
         userName = userName,
         password = passWord,
         gender = gender,
-        age = age)
+        age = age,
+        limitQuestionnaire = None)
       registrationFacade.user(userId) === expectedUser
     }
 

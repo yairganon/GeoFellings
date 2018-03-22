@@ -13,7 +13,8 @@ case class User(userId: UserId,
                 userName: String,
                 password: String,
                 gender: Gender,
-                age: Int)
+                age: Int,
+                limitQuestionnaire: Option[Int])
 
 case class Questionnaire(id: QuestionnaireId,
                          name: String,
