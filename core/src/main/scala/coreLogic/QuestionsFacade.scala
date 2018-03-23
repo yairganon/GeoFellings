@@ -1,17 +1,16 @@
 package coreLogic
 
-import coreLogic.repos.{NotificationsRepository, QuestionsRepository}
+import coreLogic.repos.{NotificationsRepository, QuestionsRepository, UsersRepository}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import service.api.{QuestionsService, ThirdPartyService}
 import service.dto._
 import util.{QuestionnaireId, UserId}
 
-import scala.util.Random
-
 class QuestionsFacade(questionsRepository: QuestionsRepository,
                       thirdPartyFacade: ThirdPartyService,
-                      notificationsRepository: NotificationsRepository) extends QuestionsService {
+                      notificationsRepository: NotificationsRepository,
+                      usersRepository: UsersRepository) extends QuestionsService {
 
   override def addQuestion(questionRequest: CreateQuestionRequest): Unit = {
     val question = Question(
@@ -84,7 +83,12 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
   }
 
   override def addQuestionnaireTo(userId: UserId, questionnaireId: QuestionnaireId): Unit = {
-    notificationsRepository.addNotificationTo(userId, questionnaireId)
+    usersRepository.get(userId).limitQuestionnaire match {
+      case Some(limit) if notificationsRepository.getPendingUserNotifications(userId).size >= limit =>
+        println("User limit")
+      case _ =>
+        notificationsRepository.addNotificationTo(userId, questionnaireId)
+    }
   }
 
   override def getWaitingQuestionnaireForUser(userId: UserId): Set[QuestionnaireId] = {

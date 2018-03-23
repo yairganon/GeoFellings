@@ -55,8 +55,9 @@ class GeoFeelingsSpringConfig {
   @Bean
   def questionsService(questionsRepository: QuestionsRepository,
                        thirdPartyService: ThirdPartyService,
-                       notificationsRepository: NotificationsRepository): QuestionsService = {
-    new QuestionsFacade(questionsRepository, thirdPartyService, notificationsRepository)
+                       notificationsRepository: NotificationsRepository,
+                       usersRepository: UsersRepository): QuestionsService = {
+    new QuestionsFacade(questionsRepository, thirdPartyService, notificationsRepository, usersRepository)
   }
 
   @Bean
@@ -91,8 +92,9 @@ class GeoFeelingsSpringConfig {
   @Bean
   def scheduleTasks(thirdPartyService: ThirdPartyService,
                     questionsService: QuestionsService,
-                    triggerService: TriggerService): ScheduleTasks ={
-    new ScheduleTasks(thirdPartyService, questionsService, triggerService)
+                    triggerService: TriggerService,
+                    userService: UserService): ScheduleTasks ={
+    new ScheduleTasks(thirdPartyService, questionsService, triggerService, userService)
   }
 
   @Bean

@@ -2,7 +2,7 @@ package spring
 
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import service.api.{QuestionsService, ThirdPartyService, TriggerService}
+import service.api.{QuestionsService, ThirdPartyService, TriggerService, UserService}
 import util.UserId
 
 import scala.collection.mutable
@@ -10,14 +10,21 @@ import scala.collection.mutable
 @Component
 class ScheduleTasks(thirdPartyService: ThirdPartyService,
                     questionsService: QuestionsService,
-                    triggerService: TriggerService) {
+                    triggerService: TriggerService,
+                    userService: UserService) {
 
   val repo = mutable.HashMap.empty[UserId, String]
 
+
   @Scheduled(fixedRate = 60000)
-  def print(): Unit = {
+  def checkForTriggers(): Unit = {
+    checkForTweets()
+    checkForLocation()
+  }
+
+  private def checkForTweets(): Unit = {
     println("Try to Get Tweets")
-    thirdPartyService.usersLastTweet().foreach{case (uId, tId) =>
+    thirdPartyService.usersLastTweet().foreach{ case (uId, tId) =>
       repo.get(uId) match {
         case None => repo += uId -> tId
         case Some(oldTweet) if oldTweet != tId =>
@@ -27,5 +34,12 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
         case _ =>
       }
     }
+  }
+
+  private def checkForLocation(): Unit = {
+    userService.lastLocations()
+      .foreach{case (uId, location) =>
+        triggerService.getLocationTriggersInRange(location).foreach(questionsService.addQuestionnaireTo(uId, _))
+      }
   }
 }

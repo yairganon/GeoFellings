@@ -1,6 +1,6 @@
 package service.api
 
-import coreLogic.repos.inMemory.{InMemoryNotificationsRepo, InMemoryQuestionRepo}
+import coreLogic.repos.inMemory.{InMemoryNotificationsRepo, InMemoryQuestionRepo, InMemoryUsersRepo}
 import coreLogic.{QuestionsFacade, ThirdPartyFacade}
 import enums.QuestionType
 import org.specs2.mutable.Specification
@@ -10,7 +10,11 @@ class QuestionsServiceTest extends Specification {
 
 
   "QuestionsServiceTest" should {
-    val service: QuestionsService = new QuestionsFacade(new InMemoryQuestionRepo, new ThirdPartyFacade, new InMemoryNotificationsRepo)
+    val service: QuestionsService = new QuestionsFacade(
+      new InMemoryQuestionRepo,
+      new ThirdPartyFacade,
+      new InMemoryNotificationsRepo,
+      new InMemoryUsersRepo)
 
     "addQuestion" in {
       val request = CreateQuestionRequest(QuestionType.OPEN, CreateQuestionData("Hey", None))

@@ -68,6 +68,7 @@ class AppUsersController(registrationService: RegistrationService,
   @ResponseBody
   def updateUser(@RequestBody request: UpdateUserRequest,
                  @RequestHeader(value = "userId") userId: UserId): Unit = {
+    println(request)
     userService.patchUser(userId, request)
   }
 
