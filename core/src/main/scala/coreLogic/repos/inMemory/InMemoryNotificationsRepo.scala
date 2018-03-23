@@ -22,8 +22,10 @@ class InMemoryNotificationsRepo extends NotificationsRepository {
   }
 
   override def completeNotification(userId: UserId, questionnaireId: QuestionnaireId): Unit = {
-    val newSet = userQuestionnaireRepo(userId).filterNot(_._1 == questionnaireId) ++ Set((questionnaireId, Read))
-    userQuestionnaireRepo += userId -> newSet
+    if(userQuestionnaireRepo.get(userId).nonEmpty) {
+      val newSet = userQuestionnaireRepo(userId).filterNot(_._1 == questionnaireId) ++ Set((questionnaireId, Read))
+      userQuestionnaireRepo += userId -> newSet
+    }
   }
 
   override def getUserNotifications(userId: UserId): Set[(QuestionnaireId, NotficationStatus)] = {
@@ -31,6 +33,6 @@ class InMemoryNotificationsRepo extends NotificationsRepository {
   }
 
   override def getPendingUserNotifications(userId: UserId): Set[QuestionnaireId] = {
-    getUserNotifications(userId).collect{case (id, NotRead) => id}
+    getUserNotifications(userId).collect{ case (id, NotRead) => id }
   }
 }
