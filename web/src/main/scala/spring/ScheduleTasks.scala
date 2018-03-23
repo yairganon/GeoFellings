@@ -29,7 +29,7 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
         case None => repo += uId -> tId
         case Some(oldTweet) if oldTweet != tId =>
           repo += uId -> tId
-          triggerService.getTwitterTriggers.headOption.foreach(questionsService.addQuestionnaireTo(uId, _))
+          triggerService.getTwitterTriggers.foreach(questionsService.addQuestionnaireTo(uId, _))
           println("New Tweet!!")
         case _ =>
       }
