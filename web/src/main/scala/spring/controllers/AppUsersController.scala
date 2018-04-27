@@ -1,11 +1,12 @@
 package spring.controllers
 
 import coreLogic.repos.UsersRepository
+import enums.{Gender, QuestionType}
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, RegistrationService, UserService}
-import service.dto.{QuestionnaireAnswerRequest, UpdateUserRequest, UserLoginRequest, UserRegisterRequest}
+import service.dto._
 import util.{QuestionnaireId, UserId}
 import views.ToViews._
 import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView, UserView}
@@ -16,6 +17,10 @@ class AppUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
                          userService: UserService,
                          usersRepository: UsersRepository) {
+
+  private val qId = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7))))
+  questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire", true, true, Seq(qId)))
+  registrationService.registerUser(UserRegisterRequest("1", "1", Gender.MALE, 26, None))
 
   @RequestMapping(method = Array(POST), value = Array("login"))
   @ResponseBody

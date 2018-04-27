@@ -16,7 +16,10 @@ class InMemoryQuestionRepo extends QuestionsRepository {
 
   val questionnaireAnswerRepo = mutable.HashMap.empty[(UserId,QuestionnaireId) , QuestionnaireAnswer]
 
-  override def add(question: Question): Unit = questionRepo += question.id -> question
+  override def add(question: Question): QuestionId = {
+    questionRepo += question.id -> question
+    question.id
+  }
 
   override def getQuestions: Seq[Question] = questionRepo.values.toSeq
 

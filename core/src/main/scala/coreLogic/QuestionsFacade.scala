@@ -5,14 +5,14 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import service.api.{QuestionsService, ThirdPartyService}
 import service.dto._
-import util.{QuestionnaireId, UserId}
+import util.{QuestionId, QuestionnaireId, UserId}
 
 class QuestionsFacade(questionsRepository: QuestionsRepository,
                       thirdPartyFacade: ThirdPartyService,
                       notificationsRepository: NotificationsRepository,
                       usersRepository: UsersRepository) extends QuestionsService {
 
-  override def addQuestion(questionRequest: CreateQuestionRequest): Unit = {
+  override def addQuestion(questionRequest: CreateQuestionRequest): QuestionId = {
     val question = Question(
       `type` = questionRequest.questionType,
       questionString = questionRequest.data.questionString,

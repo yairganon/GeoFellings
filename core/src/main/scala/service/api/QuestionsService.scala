@@ -2,7 +2,7 @@ package service.api
 
 import org.joda.time.DateTime
 import service.dto._
-import util.{QuestionnaireId, UserId}
+import util.{QuestionId, QuestionnaireId, UserId}
 
 trait QuestionsService {
 
@@ -18,7 +18,7 @@ trait QuestionsService {
 
   def defaultQuestionnaire: Option[Questionnaire]
 
-  def addQuestion(question: CreateQuestionRequest): Unit
+  def addQuestion(question: CreateQuestionRequest): QuestionId
 
   def addQuestionnaire(request: CreateQuestionnaireRequest): Unit
 

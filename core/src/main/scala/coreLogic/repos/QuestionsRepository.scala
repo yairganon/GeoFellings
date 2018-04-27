@@ -5,7 +5,7 @@ import util.{QuestionId, QuestionnaireId, UserId}
 
 trait QuestionsRepository {
 
-  def add(question: Question): Unit
+  def add(question: Question): QuestionId
 
   def add(questionnaire: Questionnaire): Unit
 
