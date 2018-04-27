@@ -18,7 +18,7 @@ class AppUsersController(registrationService: RegistrationService,
                          userService: UserService,
                          usersRepository: UsersRepository) {
 
-  private val qId = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7))))
+  private val qId = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7), None)))
   questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire", true, true, Seq(qId)))
   registrationService.registerUser(UserRegisterRequest("1", "1", Gender.MALE, 26, None))
 

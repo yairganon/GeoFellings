@@ -9,7 +9,9 @@ case class Location(latitude: Double, longitude: Double)
 
 case class CreateQuestionRequest(questionType: QuestionType, data: CreateQuestionData)
 
-case class CreateQuestionData(questionString: String, numOfOptions: Option[Int])
+case class CreateQuestionData(questionString: String,
+                              numOfOptions: Option[Int],
+                              radioOptions: Option[Seq[String]])
 
 case class CreateQuestionnaireRequest(name: String, isRegistration: Boolean, isDefault: Boolean, ids: Seq[QuestionId])
 

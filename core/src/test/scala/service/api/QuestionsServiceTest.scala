@@ -17,7 +17,7 @@ class QuestionsServiceTest extends Specification {
       new InMemoryUsersRepo)
 
     "addQuestion" in {
-      val request = CreateQuestionRequest(QuestionType.OPEN, CreateQuestionData("Hey", None))
+      val request = CreateQuestionRequest(QuestionType.OPEN, CreateQuestionData("Hey", None, None))
       service.addQuestion(request)
       service.getAll must haveSize(1)
     }
