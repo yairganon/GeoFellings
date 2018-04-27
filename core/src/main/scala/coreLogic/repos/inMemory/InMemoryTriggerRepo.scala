@@ -23,4 +23,8 @@ class InMemoryTriggerRepo extends TriggerRepository {
   }
 
   override def getAll(): Seq[Trigger] = repo.values.toSeq
+
+  override def remove(questionnaireId: QuestionnaireId): Unit = {
+    repo.remove(questionnaireId)
+  }
 }

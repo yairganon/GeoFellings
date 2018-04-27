@@ -7,6 +7,8 @@ trait TriggerRepository {
 
   def getAll(): Seq[Trigger]
 
+  def remove(questionnaireId: QuestionnaireId): Unit
+
   def addTrigger(trigger: Trigger): Unit
 
   def getTwitterTriggers: Seq[QuestionnaireId]

@@ -9,6 +9,8 @@ trait TriggerService {
 
   def getAll(): Seq[Trigger]
 
+  def remove(questionnaireId: QuestionnaireId): Unit
+
   def getTwitterTriggers: Seq[QuestionnaireId]
 
   def getLocationTriggersInRange(location: Location): Seq[QuestionnaireId]

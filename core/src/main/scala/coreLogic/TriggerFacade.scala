@@ -35,4 +35,8 @@ class TriggerFacade(triggerRepository: TriggerRepository) extends TriggerService
   override def getAll(): Seq[Trigger] = {
     triggerRepository.getAll()
   }
+
+  override def remove(questionnaireId: QuestionnaireId): Unit = {
+    triggerRepository.remove(questionnaireId)
+  }
 }

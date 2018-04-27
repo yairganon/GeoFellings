@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, TriggerService}
 import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest, CreateTriggerRequest}
-import util.UserId
+import util.{QuestionnaireId, UserId}
 import views.ToViews._
 import views._
 
@@ -70,8 +70,14 @@ class AdminController(questionsService: QuestionsService,
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("triggers"))
   @ResponseBody
-  def getAllTriggers(): Seq[TriggerView] = {
+  def getAllTriggers: Seq[TriggerView] = {
     triggerService.getAll()
       .map(trigger => trigger.toView(questionsService.getQuestionnaire(trigger.questionnaireId).name))
+  }
+
+  @RequestMapping(method = Array(RequestMethod.DELETE), value = Array("trigger/{id}"))
+  @ResponseBody
+  def deleteTrigger(@PathVariable("id") triggerId: QuestionnaireId): Unit = {
+    triggerService.remove(triggerId)
   }
 }
