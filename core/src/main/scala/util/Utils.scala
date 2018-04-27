@@ -7,21 +7,26 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{ Await, Future }
+import scala.concurrent.{Await, Future}
 
 object Utils {
 
+  val mapper = new ObjectMapper() with ScalaObjectMapper
+  mapper.registerModule(DefaultScalaModule)
+
   implicit class `AnyRef -> JsonString`(any: Any) {
 
-    val mapper = new ObjectMapper() with ScalaObjectMapper
-    mapper.registerModule(DefaultScalaModule)
 
     def toJsonString: String = mapper.writeValueAsString(any)
+  }
 
-    def fromJsonString[T](str: String): T = mapper.readValue[T](str)
+  implicit class `String -> T`(str: String) {
+
+    def fromJsonString[T](implicit manifest: Manifest[T]): T = mapper.readValue[T](str)
   }
 
   implicit class `Future Await`[T](future: Future[T]) {
+
     def awaitResult: T = Await.result(future, Duration(1, TimeUnit.MINUTES))
   }
 

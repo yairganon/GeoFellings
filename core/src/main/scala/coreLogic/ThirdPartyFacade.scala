@@ -49,7 +49,7 @@ class ThirdPartyFacade() extends ThirdPartyService{
       method = GET,
       uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=${facebookToken.token}")
     pipeline(request).foreach(data => {
-      println(data.entity.fromJsonString[FacebookResponse])
+      println(data.entity.asString.fromJsonString[FacebookResponse])
     })
   }
 }
