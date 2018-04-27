@@ -55,9 +55,12 @@ class ThirdPartyWebHooksController() {
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("facebook"))
   @ResponseBody
-  def facebookGetNotification(@RequestParam(value = "hub.mode", required = true) mode: String,
-                              @RequestParam(value = "hub.challenge", required = true) challenge: String,
-                              @RequestParam(value = "hub.verify_token", required = true) verify_token: String): String = {
+  def facebookGetNotification(@RequestParam(value = "hub.mode", required = false) mode: String,
+                              @RequestParam(value = "hub.challenge", required = false) challenge: String,
+                              @RequestParam(value = "hub.verify_token", required = false) verify_token: String): String = {
+    println(mode)
+    println(challenge)
+    println(verify_token)
     challenge
   }
 
