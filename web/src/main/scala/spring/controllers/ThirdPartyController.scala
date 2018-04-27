@@ -33,7 +33,7 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
   @ResponseBody
   def saveFacebookTokens(@RequestBody request: FacebookToken,
                         @RequestHeader(value = "userId") userId: UserId): Unit = {
-    println(FacebookToken)
+    println(request)
   }
 }
 
