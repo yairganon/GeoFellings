@@ -17,6 +17,8 @@ object Utils {
     mapper.registerModule(DefaultScalaModule)
 
     def toJsonString: String = mapper.writeValueAsString(any)
+
+    def fromJsonString[T](str: String): T = mapper.readValue[T](str)
   }
 
   implicit class `Future Await`[T](future: Future[T]) {

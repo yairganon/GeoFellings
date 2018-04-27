@@ -11,6 +11,7 @@ import util.UserId
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.mutable
 import scala.concurrent.Future
+import util.Utils._
 
 class ThirdPartyFacade() extends ThirdPartyService{
 
@@ -48,7 +49,14 @@ class ThirdPartyFacade() extends ThirdPartyService{
       method = GET,
       uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=${facebookToken.token}")
     pipeline(request).foreach(data => {
-      println(data.entity.asString)
+      println(data.entity.fromJsonString[FacebookResponse])
     })
   }
 }
+
+case class FacebookResponse(posts: FacebookPosts)
+
+case class FacebookPosts(data: Seq[FacebookPostData])
+
+case class FacebookPostData(id: String,
+                            message: String)
