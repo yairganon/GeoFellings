@@ -3,7 +3,7 @@ package spring.controllers
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.ThirdPartyService
-import service.dto.TwitterTokens
+import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
 @Controller
@@ -27,6 +27,13 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
   @ResponseBody
   def getTwitterTokens(@RequestHeader(value = "userId") userId: UserId): Option[TwitterTokens] = {
     thirdPartyService.twitterTokens(userId)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("facebook"))
+  @ResponseBody
+  def saveFacebookTokens(@RequestBody request: FacebookToken,
+                        @RequestHeader(value = "userId") userId: UserId): Unit = {
+    println(FacebookToken)
   }
 }
 
