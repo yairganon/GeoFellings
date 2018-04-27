@@ -7,7 +7,8 @@ import util.{QuestionId, QuestionnaireId, UserId}
 case class Question(id: QuestionId = QuestionId.random,
                     `type`: QuestionType,
                     questionString: String,
-                    numOfOptions: Option[Int])
+                    numOfOptions: Option[Int],
+                    radioOptions: Option[Seq[String]])
 
 case class User(userId: UserId,
                 userName: String,

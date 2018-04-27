@@ -16,7 +16,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
     val question = Question(
       `type` = questionRequest.questionType,
       questionString = questionRequest.data.questionString,
-      numOfOptions = questionRequest.data.numOfOptions
+      numOfOptions = questionRequest.data.numOfOptions,
+      radioOptions = questionRequest.data.radioOptions
     )
     questionsRepository.add(question)
   }

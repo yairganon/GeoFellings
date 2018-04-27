@@ -7,7 +7,7 @@ object ToViews {
   implicit class `Question -> QuestionView`(q: Question) {
 
     def toView: QuestionView = {
-      QuestionView(q.id.getId, q.`type`, QuestionDataView(q.questionString, q.numOfOptions))
+      QuestionView(q.id.getId, q.`type`, QuestionDataView(q.questionString, q.numOfOptions, q.radioOptions))
     }
   }
 
