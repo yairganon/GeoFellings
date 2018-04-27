@@ -5,6 +5,8 @@ import util.QuestionnaireId
 
 trait TriggerRepository {
 
+  def getAll(): Seq[Trigger]
+
   def addTrigger(trigger: Trigger): Unit
 
   def getTwitterTriggers: Seq[QuestionnaireId]

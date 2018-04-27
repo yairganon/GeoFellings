@@ -1,7 +1,8 @@
 package views
 
 import enums.{Gender, QuestionType, RegisterStatus}
-import service.dto.QuestionnaireWithAnswersDto
+import service.dto.{LocationTrigger, QuestionnaireWithAnswersDto, SocialNetworkTrigger, TimeRangeTrigger}
+import util.QuestionnaireId
 
 case class QuestionsView(questions: Seq[QuestionView])
 
@@ -35,3 +36,10 @@ case class FullUserView(userId: String,
                         questionnaires: Seq[QuestionnaireWithAnswersDto])
 
 case class UsersView(users: Seq[UserView])
+
+case class TriggerView(id: String,
+                       triggerName: String,
+                       questionnaireName: String,
+                       locationTrigger: Option[LocationTrigger],
+                       socialNetworkTrigger: Option[SocialNetworkTrigger],
+                       timeRangeTrigger: Option[TimeRangeTrigger])

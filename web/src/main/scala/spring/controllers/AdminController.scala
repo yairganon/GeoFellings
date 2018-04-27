@@ -67,4 +67,11 @@ class AdminController(questionsService: QuestionsService,
   def createTrigger(@RequestBody request: CreateTriggerRequest): Unit = {
     triggerService.addTrigger(request)
   }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("triggers"))
+  @ResponseBody
+  def getAllTriggers(): Seq[TriggerView] = {
+    triggerService.getAll()
+      .map(trigger => trigger.toView(questionsService.getQuestionnaire(trigger.questionnaireId).name))
+  }
 }

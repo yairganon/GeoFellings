@@ -1,6 +1,6 @@
 package views
 
-import service.dto.{Question, Questionnaire, User}
+import service.dto.{Question, Questionnaire, Trigger, User}
 
 object ToViews {
 
@@ -34,6 +34,19 @@ object ToViews {
         age = user.age,
         limitQuestionnaire = user.limitQuestionnaire
       )
+    }
+  }
+
+  implicit class `Trigger -> TriggerView`(trigger: Trigger) {
+
+    def toView(questionnaireName: String): TriggerView = {
+      TriggerView(
+        id = trigger.questionnaireId.getId,
+        triggerName = trigger.triggerName,
+        questionnaireName = questionnaireName,
+        locationTrigger = trigger.locationTrigger,
+        socialNetworkTrigger = trigger.socialNetworkTrigger,
+        timeRangeTrigger = trigger.timeRangeTrigger)
     }
   }
 

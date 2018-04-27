@@ -15,10 +15,12 @@ class InMemoryTriggerRepo extends TriggerRepository {
   }
 
   override def getTwitterTriggers: Seq[QuestionnaireId] = {
-    repo.collect{case (id, Trigger(_, _, _, Some(SocialNetworkTrigger(true)), _)) => id}.toSeq
+    repo.collect{ case (id, Trigger(_, _, _, Some(SocialNetworkTrigger(true)), _)) => id }.toSeq
   }
 
   override def getLocationTriggers: Seq[(QuestionnaireId, LocationTrigger)] = {
-    repo.collect{case (id, Trigger(_, _, Some(locationTrigger), _, _)) => (id, locationTrigger)}.toSeq
+    repo.collect{ case (id, Trigger(_, _, Some(locationTrigger), _, _)) => (id, locationTrigger) }.toSeq
   }
+
+  override def getAll(): Seq[Trigger] = repo.values.toSeq
 }

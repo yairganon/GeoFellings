@@ -1,6 +1,6 @@
 import java.util.UUID
 
-import service.dto.{ Question, Questionnaire, User }
+import service.dto.{Question, Questionnaire, User}
 
 package object util {
   type QuestionId = Guid[Question]

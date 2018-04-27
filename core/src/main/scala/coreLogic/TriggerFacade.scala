@@ -31,4 +31,8 @@ class TriggerFacade(triggerRepository: TriggerRepository) extends TriggerService
   private def isInRange(userLocation: Location, location: Location, radius: Int) = {
     DistanceCalculator.calculateDistanceInKilometer(userLocation, location) <= radius
   }
+
+  override def getAll(): Seq[Trigger] = {
+    triggerRepository.getAll()
+  }
 }
