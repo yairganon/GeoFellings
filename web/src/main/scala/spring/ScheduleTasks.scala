@@ -16,7 +16,7 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
   val repo = mutable.HashMap.empty[UserId, String]
 
 
-  @Scheduled(fixedRate = 10000)
+  @Scheduled(fixedRate = 1000000)
   def checkForTriggers(): Unit = {
     checkForTweets()
     checkForLocation()
