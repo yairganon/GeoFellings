@@ -52,4 +52,18 @@ class ThirdPartyWebHooksController() {
   def twitterGetNotification(@RequestParam(value = "crc_token", required = true) crcToken: String): Unit = {
     println(crcToken)
   }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("facebook"))
+  @ResponseBody
+  def facebookGetNotification(@RequestParam(value = "hub.mode", required = true) mode: String,
+                              @RequestParam(value = "hub.challenge", required = true) challenge: String,
+                              @RequestParam(value = "hub.verify_token", required = true) verify_token: String): String = {
+    challenge
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST), value = Array("facebook"))
+  @ResponseBody
+  def facebookPOSTNotification(@RequestBody request: Map[String, String]): Unit = {
+    println(request)
+  }
 }
