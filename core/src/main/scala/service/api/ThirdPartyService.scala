@@ -1,6 +1,6 @@
 package service.api
 
-import service.dto.TwitterTokens
+import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
 trait ThirdPartyService {
@@ -14,4 +14,6 @@ trait ThirdPartyService {
   def userTweet(userId: UserId): Option[String]
 
   def usersLastTweet(): Seq[(UserId, String)]
+
+  def storeFacebookToken(facebookToken: FacebookToken): Unit
 }

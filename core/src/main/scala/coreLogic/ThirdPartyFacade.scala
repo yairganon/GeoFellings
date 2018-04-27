@@ -1,12 +1,16 @@
 package coreLogic
 
+import akka.actor.ActorSystem
 import gcm.http.TwitterRest
-import org.joda.time.DateTime
 import service.api.ThirdPartyService
-import service.dto.TwitterTokens
+import service.dto.{FacebookToken, TwitterTokens}
+import spray.client.pipelining.sendReceive
+import spray.http.HttpMethods.GET
+import spray.http.{HttpRequest, HttpResponse}
 import util.UserId
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.mutable
+import scala.concurrent.Future
 
 class ThirdPartyFacade() extends ThirdPartyService{
 
@@ -32,5 +36,19 @@ class ThirdPartyFacade() extends ThirdPartyService{
       (userId, tokens) <- repo.toSeq
       tweet <- TwitterRest.lastTweetOf(tokens.id)
     } yield (userId, tweet.id_str)
+  }
+
+  val pipeline: HttpRequest => Future[HttpResponse] = {
+    val actorSystem = ActorSystem("HttpGcm798720955034")
+    sendReceive(actorSystem, actorSystem.dispatcher)
+  }
+
+  override def storeFacebookToken(facebookToken: FacebookToken): Unit = {
+    val request = HttpRequest(
+      method = GET,
+      uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=${facebookToken.token}")
+    pipeline(request).foreach(data => {
+      println(data.entity.asString)
+    })
   }
 }
