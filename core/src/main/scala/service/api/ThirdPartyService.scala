@@ -16,6 +16,8 @@ trait ThirdPartyService {
 
   def userTweet(userId: UserId): Option[String]
 
+  def userLastPost(userId: UserId): Option[FacebookPostData]
+
   def usersLastTweet(): Seq[(UserId, String)]
 
   def usersLastPosts(): Seq[(UserId, FacebookPostData)]

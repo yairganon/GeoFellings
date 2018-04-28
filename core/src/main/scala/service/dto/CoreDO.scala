@@ -1,6 +1,7 @@
 package service.dto
 
 import enums.{Gender, QuestionType}
+import gcm.http.FacebookPostData
 import org.joda.time.DateTime
 import util.{QuestionId, QuestionnaireId, UserId}
 
@@ -29,7 +30,8 @@ case class QuestionnaireAnswer(userId: UserId,
                                time: DateTime,
                                location: Option[Location],
                                answers: Seq[QuestionAnswer],
-                               lastTweet: Option[String])
+                               lastTweet: Option[String],
+                               lastPost: Option[FacebookPostData])
 
 
 case class QuestionWithAnswersDto(id: String,
@@ -45,6 +47,7 @@ case class QuestionnaireWithAnswersDto(id: String,
                                        isRegistration: Boolean,
                                        isDefault: Boolean,
                                        lastTweet: Option[String],
+                                       lastPost: Option[FacebookPostData],
                                        questions: Seq[QuestionWithAnswersDto])
 
 case class Trigger(triggerName: String,

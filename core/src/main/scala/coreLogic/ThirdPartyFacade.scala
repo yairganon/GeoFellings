@@ -27,6 +27,12 @@ class ThirdPartyFacade() extends ThirdPartyService{
 
   override def removeFacebookTokens(userId: UserId): Unit = facebookRepo.remove(userId)
 
+  override def userLastPost(userId: UserId): Option[FacebookPostData] = {
+    facebookRepo.get(userId).flatMap(token => {
+      FacebookRest.lastPostOf(token.token)
+    })
+  }
+
   override def userTweet(userId: UserId): Option[String] = {
     for {
       userTokens <- tokens(userId)._1
@@ -48,5 +54,6 @@ class ThirdPartyFacade() extends ThirdPartyService{
       tweet <- TwitterRest.lastTweetOf(tokens.id)
     } yield (userId, tweet.id_str)
   }
+
 }
 

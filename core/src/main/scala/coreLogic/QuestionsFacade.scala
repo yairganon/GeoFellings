@@ -53,7 +53,8 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
       submitTime,
       request.location,
       request.answers,
-      thirdPartyFacade.userTweet(userId)
+      thirdPartyFacade.userTweet(userId),
+      thirdPartyFacade.userLastPost(userId)
     ))
   }
 
@@ -70,6 +71,7 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
           questionnaire.isRegistration,
           questionnaire.isDefault,
           questionnaireAnswer.lastTweet,
+          questionnaireAnswer.lastPost,
           questionnaireAnswer.answers.map(questionnaireAnswer => {
             val question = questionsRepository.getQuestion(questionnaireAnswer.id)
             QuestionWithAnswersDto(

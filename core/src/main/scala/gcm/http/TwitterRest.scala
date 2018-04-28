@@ -67,7 +67,8 @@ case class FacebookResponse(posts: FacebookPosts)
 case class FacebookPosts(data: Seq[FacebookPostData])
 
 case class FacebookPostData(id: String,
-                            message: String)
+                            message: String,
+                            image: Option[String])
 
 case class FacebookPictureResponse(picture: FacebookPicture)
 
