@@ -1,5 +1,6 @@
 package spring
 
+import gcm.http.FacebookPostData
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import service.api.{QuestionsService, ThirdPartyService, TriggerService, UserService}
@@ -13,26 +14,43 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
                     triggerService: TriggerService,
                     userService: UserService) {
 
-  val repo = mutable.HashMap.empty[UserId, String]
+  val userLastTweet = mutable.HashMap.empty[UserId, String]
+
+  val userLastFacebookPost = mutable.HashMap.empty[UserId, String]
 
 
-  @Scheduled(fixedRate = 1000000)
+  @Scheduled(fixedRate = 10000)
   def checkForTriggers(): Unit = {
     checkForTweets()
     checkForLocation()
+    checkForFacebookPosts()
   }
 
   private def checkForTweets(): Unit = {
     println("Try to Get Tweets")
     thirdPartyService.usersLastTweet().foreach{ case (uId, tId) =>
-      repo.get(uId) match {
-        case None => repo += uId -> tId
+      userLastTweet.get(uId) match {
+        case None => userLastTweet += uId -> tId
         case Some(oldTweet) if oldTweet != tId =>
-          repo += uId -> tId
+          userLastTweet += uId -> tId
           triggerService.getTwitterTriggers.foreach(questionsService.addQuestionnaireTo(uId, _))
           println("New Tweet!!")
         case _ =>
       }
+    }
+  }
+
+  private def checkForFacebookPosts(): Unit = {
+    println("Try to Get Facebook posts")
+    thirdPartyService.usersLastPosts().foreach{
+      case (uId, FacebookPostData(id, _)) =>
+        userLastFacebookPost.get(uId) match {
+          case None => userLastFacebookPost += uId -> id
+          case Some(oldPost) if oldPost != id =>
+            userLastFacebookPost += uId -> id
+            println("New Post!!")
+          case _ =>
+        }
     }
   }
 

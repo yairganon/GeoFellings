@@ -1,5 +1,6 @@
 package service.api
 
+import gcm.http.FacebookPostData
 import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
@@ -16,6 +17,8 @@ trait ThirdPartyService {
   def userTweet(userId: UserId): Option[String]
 
   def usersLastTweet(): Seq[(UserId, String)]
+
+  def usersLastPosts(): Seq[(UserId, FacebookPostData)]
 
   def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit
 }
