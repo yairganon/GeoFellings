@@ -1,11 +1,11 @@
 package coreLogic.repos.inMemory
 
 import coreLogic.repos.QuestionsRepository
+import org.joda.time.DateTime
 import service.dto.{Question, Questionnaire, QuestionnaireAnswer}
 import util.{QuestionId, QuestionnaireId, UserId}
 
 import scala.collection.mutable
-import scala.util.Random
 
 class InMemoryQuestionRepo extends QuestionsRepository {
 
@@ -14,7 +14,7 @@ class InMemoryQuestionRepo extends QuestionsRepository {
 
   val questionnaireRepo = mutable.HashMap.empty[QuestionnaireId, Questionnaire]
 
-  val questionnaireAnswerRepo = mutable.HashMap.empty[(UserId,QuestionnaireId) , QuestionnaireAnswer]
+  val questionnaireAnswerRepo = mutable.HashMap.empty[(UserId,QuestionnaireId, Long) , QuestionnaireAnswer]
 
   override def add(question: Question): QuestionId = {
     questionRepo += question.id -> question
@@ -32,11 +32,11 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def defaultQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isDefault)
 
   override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = {
-    questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId) -> questionnaireAnswer
+    questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId, DateTime.now.getMillis) -> questionnaireAnswer
   }
 
   override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] =
-    questionnaireAnswerRepo.collect{case ((`userId`, _), q) => q}.toSeq
+    questionnaireAnswerRepo.collect{case ((`userId`, _, _), q) => q}.toSeq
 
   override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = questionnaireRepo(questionnaireId)
 
