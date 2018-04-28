@@ -41,9 +41,20 @@ object FacebookRest {
     })
     eventualResponse.awaitResult.posts.data.headOption
   }
+
+  def profilePictureOf(userToken: String): Option[String] = Try{
+    val request = HttpRequest(
+      method = GET,
+      uri = s"https://graph.facebook.com/v2.12/me?fields=picture.width(720).height(720)&access_token=$userToken")
+    val eventualResponse = pipeline(request).map(data => {
+      data.entity.asString.fromJsonString[FacebookPictureResponse]
+    })
+    eventualResponse.awaitResult.picture.data.url
+  }.toOption
 }
 
 object Config {
+
   final val TwitterAppId = "yRm6u04SFsTgYxDMyqHSrTvWc"
   final val TwitterSecret = "pU1LYQ3o6kfyuDyOlexvckDmjr5EF6q7YE5teLRidsqA43Bkb3"
   final val TwitterAccessToken = "467656164-vAF2kaZUZ9v7NAfXUAZ9bXKRVzqkQnpIhPHeBXwp"
@@ -57,3 +68,9 @@ case class FacebookPosts(data: Seq[FacebookPostData])
 
 case class FacebookPostData(id: String,
                             message: String)
+
+case class FacebookPictureResponse(picture: FacebookPicture)
+
+case class FacebookPicture(data: FacebookPictureData)
+
+case class FacebookPictureData(url: String)

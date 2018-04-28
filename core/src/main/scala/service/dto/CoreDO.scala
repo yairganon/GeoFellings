@@ -15,7 +15,8 @@ case class User(userId: UserId,
                 password: String,
                 gender: Gender,
                 age: Int,
-                limitQuestionnaire: Option[Int])
+                limitQuestionnaire: Option[Int],
+                fbProfilePicture: Option[String] = None)
 
 case class Questionnaire(id: QuestionnaireId,
                          name: String,

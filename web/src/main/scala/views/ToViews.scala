@@ -32,7 +32,8 @@ object ToViews {
         userName = user.userName,
         gender = user.gender,
         age = user.age,
-        limitQuestionnaire = user.limitQuestionnaire
+        limitQuestionnaire = user.limitQuestionnaire,
+        image = user.fbProfilePicture
       )
     }
   }

@@ -1,6 +1,5 @@
 package spring.controllers
 
-import coreLogic.repos.UsersRepository
 import enums.{Gender, QuestionType}
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
@@ -16,7 +15,6 @@ import views.{QuestionnaireView, QuestionnairesView, RegisterStatusView, UserVie
 class AppUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
                          userService: UserService,
-                         usersRepository: UsersRepository,
                          triggerService: TriggerService) {
 
   private val qId1 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7), None)))
@@ -81,14 +79,13 @@ class AppUsersController(registrationService: RegistrationService,
   @ResponseBody
   def updateUser(@RequestBody request: UpdateUserRequest,
                  @RequestHeader(value = "userId") userId: UserId): Unit = {
-    println(request)
     userService.patchUser(userId, request)
   }
 
   @RequestMapping(method = Array(GET), value = Array(""))
   @ResponseBody
   def getUser(@RequestHeader(value = "userId") userId: UserId): UserView = {
-    usersRepository.get(userId).toView
+    userService.getUser(userId).toView
   }
 
 }

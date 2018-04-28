@@ -26,7 +26,8 @@ case class UserView(userId: String,
                     userName: String,
                     gender: Gender,
                     age: Int,
-                    limitQuestionnaire: Option[Int])
+                    limitQuestionnaire: Option[Int],
+                    image: Option[String])
 
 
 case class FullUserView(userId: String,

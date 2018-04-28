@@ -103,8 +103,9 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def userService(usersRepository: UsersRepository): UserService = {
-    new LogInUserFacade(usersRepository)
+  def userService(usersRepository: UsersRepository,
+                  thirdPartyService: ThirdPartyService): UserService = {
+    new LogInUserFacade(usersRepository, thirdPartyService)
   }
 
   @Bean
@@ -116,8 +117,7 @@ class GeoFeelingsSpringConfig {
   def appUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
                          userService: UserService,
-                         usersRepository: UsersRepository,
                          triggerService: TriggerService): AppUsersController = {
-    new AppUsersController(registrationService, questionsService, userService, usersRepository, triggerService)
+    new AppUsersController(registrationService, questionsService, userService, triggerService)
   }
 }
