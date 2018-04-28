@@ -1,7 +1,7 @@
 package views
 
 import enums.{Gender, QuestionType, RegisterStatus}
-import service.dto.{LocationTrigger, QuestionnaireWithAnswersDto, SocialNetworkTrigger, TimeRangeTrigger}
+import service.dto._
 import util.QuestionnaireId
 
 case class QuestionsView(questions: Seq[QuestionView])
@@ -45,3 +45,6 @@ case class TriggerView(id: String,
                        locationTrigger: Option[LocationTrigger],
                        socialNetworkTrigger: Option[SocialNetworkTrigger],
                        timeRangeTrigger: Option[TimeRangeTrigger])
+
+
+case class SocialNetworkTokens(twitter: Option[TwitterTokens], facebook: Option[FacebookToken])

@@ -7,7 +7,7 @@ trait ThirdPartyService {
 
   def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit
 
-  def twitterTokens(userId: UserId): Option[TwitterTokens]
+  def twitterTokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken])
 
   def removeTokens(userId: UserId): Unit
 
@@ -15,5 +15,5 @@ trait ThirdPartyService {
 
   def usersLastTweet(): Seq[(UserId, String)]
 
-  def storeFacebookToken(facebookToken: FacebookToken): Unit
+  def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit
 }

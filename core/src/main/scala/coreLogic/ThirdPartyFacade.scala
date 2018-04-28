@@ -15,18 +15,21 @@ import util.Utils._
 
 class ThirdPartyFacade() extends ThirdPartyService{
 
-  val repo = mutable.HashMap.empty[(UserId), TwitterTokens]
+  val twitterRepo = mutable.HashMap.empty[(UserId), TwitterTokens]
+  val facebookRepo = mutable.HashMap.empty[(UserId), FacebookToken]
 
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit =
-    repo += userId -> twitterTokens
+    twitterRepo += userId -> twitterTokens
 
-  override def twitterTokens(userId: UserId): Option[TwitterTokens] = repo.get(userId)
+  override def twitterTokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken]) = {
+    (twitterRepo.get(userId), facebookRepo.get(userId))
+  }
 
-  override def removeTokens(userId: UserId): Unit = repo.remove(userId)
+  override def removeTokens(userId: UserId): Unit = twitterRepo.remove(userId)
 
   override def userTweet(userId: UserId): Option[String] = {
     for {
-      userTokens <- twitterTokens(userId)
+      userTokens <- twitterTokens(userId)._1
       userId = userTokens.id
       userTweet <- TwitterRest.lastTweetOf(userId)
     } yield userTweet.text
@@ -34,7 +37,7 @@ class ThirdPartyFacade() extends ThirdPartyService{
 
   override def usersLastTweet(): Seq[(UserId, String)] = {
     for {
-      (userId, tokens) <- repo.toSeq
+      (userId, tokens) <- twitterRepo.toSeq
       tweet <- TwitterRest.lastTweetOf(tokens.id)
     } yield (userId, tweet.id_str)
   }
@@ -44,7 +47,8 @@ class ThirdPartyFacade() extends ThirdPartyService{
     sendReceive(actorSystem, actorSystem.dispatcher)
   }
 
-  override def storeFacebookToken(facebookToken: FacebookToken): Unit = {
+  override def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit = {
+    facebookRepo += userId -> facebookToken
     val request = HttpRequest(
       method = GET,
       uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=${facebookToken.token}")
