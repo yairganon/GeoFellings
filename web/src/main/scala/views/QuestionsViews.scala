@@ -34,6 +34,7 @@ case class FullUserView(userId: String,
                         userName: String,
                         gender: Gender,
                         age: Int,
+                        image: Option[String],
                         questionnaires: Seq[QuestionnaireWithAnswersDto])
 
 case class UsersView(users: Seq[UserView])

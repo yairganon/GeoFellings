@@ -57,6 +57,7 @@ class AdminController(questionsService: QuestionsService,
       user.userName,
       user.gender,
       user.age,
+      user.fbProfilePicture,
       questionsService.getUserQuestionnaires(userId)
     )
   }
