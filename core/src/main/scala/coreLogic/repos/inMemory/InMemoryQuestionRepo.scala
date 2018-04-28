@@ -1,7 +1,6 @@
 package coreLogic.repos.inMemory
 
 import coreLogic.repos.QuestionsRepository
-import org.joda.time.DateTime
 import service.dto.{Question, Questionnaire, QuestionnaireAnswer}
 import util.{QuestionId, QuestionnaireId, UserId}
 
@@ -32,7 +31,7 @@ class InMemoryQuestionRepo extends QuestionsRepository {
   override def defaultQuestionnaire: Option[Questionnaire] = questionnaireRepo.values.find(_.isDefault)
 
   override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = {
-    questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId, DateTime.now.getMillis) -> questionnaireAnswer
+    questionnaireAnswerRepo += (questionnaireAnswer.userId, questionnaireAnswer.questionnaireId, questionnaireAnswer.time.getMillis) -> questionnaireAnswer
   }
 
   override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] =
