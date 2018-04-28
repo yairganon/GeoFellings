@@ -36,10 +36,10 @@ object FacebookRest {
     val request = HttpRequest(
       method = GET,
       uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=$userToken")
-    pipeline(request).foreach(data => {
-      println(data.entity.asString.fromJsonString[FacebookResponse])
+    val eventualResponse = pipeline(request).map(data => {
+      data.entity.asString.fromJsonString[FacebookResponse]
     })
-    null
+    eventualResponse.awaitResult.posts.data.headOption
   }
 }
 
