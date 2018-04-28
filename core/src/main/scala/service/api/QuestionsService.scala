@@ -20,7 +20,7 @@ trait QuestionsService {
 
   def addQuestion(question: CreateQuestionRequest): QuestionId
 
-  def addQuestionnaire(request: CreateQuestionnaireRequest): Unit
+  def addQuestionnaire(request: CreateQuestionnaireRequest): QuestionnaireId
 
   def getQuestionnaires: Seq[Questionnaire]
 

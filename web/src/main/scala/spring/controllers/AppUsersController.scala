@@ -5,7 +5,7 @@ import enums.{Gender, QuestionType}
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
 import org.springframework.web.bind.annotation._
-import service.api.{QuestionsService, RegistrationService, UserService}
+import service.api.{QuestionsService, RegistrationService, TriggerService, UserService}
 import service.dto._
 import util.{QuestionnaireId, UserId}
 import views.ToViews._
@@ -16,13 +16,15 @@ import views.{QuestionnaireView, QuestionnairesIdView, RegisterStatusView, UserV
 class AppUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
                          userService: UserService,
-                         usersRepository: UsersRepository) {
+                         usersRepository: UsersRepository,
+                         triggerService: TriggerService) {
 
   private val qId1 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7), None)))
   private val qId2 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.OPEN, CreateQuestionData("Question-2", None, None)))
   private val qId3 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.MULTIPLE, CreateQuestionData("Question-3", None, Some(Seq("opt-1", "opt-2", "opt-3")))))
-  questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire", true, true, Seq(qId1, qId2, qId3)))
+  val id = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire", true, true, Seq(qId1, qId2, qId3)))
   registrationService.registerUser(UserRegisterRequest("1", "1", Gender.MALE, 26, None))
+  triggerService.addTrigger(CreateTriggerRequest("Trigger Name", id, None, Some(SocialNetworkTrigger(true)), None))
 
   @RequestMapping(method = Array(POST), value = Array("login"))
   @ResponseBody

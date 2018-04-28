@@ -24,15 +24,17 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
 
   override def getAll: Seq[Question] = questionsRepository.getQuestions
 
-  override def addQuestionnaire(request: CreateQuestionnaireRequest): Unit = {
+  override def addQuestionnaire(request: CreateQuestionnaireRequest): QuestionnaireId = {
+    val id = QuestionnaireId.random
     questionsRepository
       .add(Questionnaire(
-        id = QuestionnaireId.random,
+        id = id,
         name = request.name,
         isRegistration = request.isRegistration,
         isDefault = request.isDefault,
         questions = request.ids
       ))
+    id
   }
 
   override def getQuestionnaires: Seq[Questionnaire] = {

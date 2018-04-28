@@ -116,7 +116,8 @@ class GeoFeelingsSpringConfig {
   def appUsersController(registrationService: RegistrationService,
                          questionsService: QuestionsService,
                          userService: UserService,
-                         usersRepository: UsersRepository): AppUsersController = {
-    new AppUsersController(registrationService, questionsService, userService, usersRepository)
+                         usersRepository: UsersRepository,
+                         triggerService: TriggerService): AppUsersController = {
+    new AppUsersController(registrationService, questionsService, userService, usersRepository, triggerService)
   }
 }
