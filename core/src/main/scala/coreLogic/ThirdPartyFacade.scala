@@ -21,15 +21,17 @@ class ThirdPartyFacade() extends ThirdPartyService{
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit =
     twitterRepo += userId -> twitterTokens
 
-  override def twitterTokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken]) = {
+  override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken]) = {
     (twitterRepo.get(userId), facebookRepo.get(userId))
   }
 
-  override def removeTokens(userId: UserId): Unit = twitterRepo.remove(userId)
+  override def removeTwitterTokens(userId: UserId): Unit = twitterRepo.remove(userId)
+
+  override def removeFacebookTokens(userId: UserId): Unit = facebookRepo.remove(userId)
 
   override def userTweet(userId: UserId): Option[String] = {
     for {
-      userTokens <- twitterTokens(userId)._1
+      userTokens <- tokens(userId)._1
       userId = userTokens.id
       userTweet <- TwitterRest.lastTweetOf(userId)
     } yield userTweet.text
@@ -56,6 +58,7 @@ class ThirdPartyFacade() extends ThirdPartyService{
       println(data.entity.asString.fromJsonString[FacebookResponse])
     })
   }
+
 }
 
 case class FacebookResponse(posts: FacebookPosts)

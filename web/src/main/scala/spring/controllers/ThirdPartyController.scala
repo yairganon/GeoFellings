@@ -21,13 +21,19 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
   @RequestMapping(method = Array(RequestMethod.DELETE), value = Array("twitter"))
   @ResponseBody
   def deleteTwitterTokens(@RequestHeader(value = "userId") userId: UserId): Unit = {
-    thirdPartyService.removeTokens(userId)
+    thirdPartyService.removeTwitterTokens(userId)
+  }
+
+  @RequestMapping(method = Array(RequestMethod.DELETE), value = Array("facebook"))
+  @ResponseBody
+  def deleteFacebookTokens(@RequestHeader(value = "userId") userId: UserId): Unit = {
+    thirdPartyService.removeFacebookTokens(userId)
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("tokens"))
   @ResponseBody
   def getTwitterTokens(@RequestHeader(value = "userId") userId: UserId): SocialNetworkTokens = {
-    val tokens = thirdPartyService.twitterTokens(userId)
+    val tokens = thirdPartyService.tokens(userId)
     SocialNetworkTokens(tokens._1, tokens._2)
   }
 

@@ -7,9 +7,11 @@ trait ThirdPartyService {
 
   def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit
 
-  def twitterTokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken])
+  def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken])
 
-  def removeTokens(userId: UserId): Unit
+  def removeTwitterTokens(userId: UserId): Unit
+
+  def removeFacebookTokens(userId: UserId): Unit
 
   def userTweet(userId: UserId): Option[String]
 
