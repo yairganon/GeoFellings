@@ -48,7 +48,7 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
           case None => userLastFacebookPost += uId -> id
           case Some(oldPost) if oldPost != id =>
             userLastFacebookPost += uId -> id
-            println("New Post!!")
+            triggerService.getTwitterTriggers.foreach(questionsService.addQuestionnaireTo(uId, _))
           case _ =>
         }
     }
