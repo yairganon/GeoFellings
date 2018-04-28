@@ -43,7 +43,7 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
   private def checkForFacebookPosts(): Unit = {
     println("Try to Get Facebook posts")
     thirdPartyService.usersLastPosts().foreach{
-      case (uId, FacebookPostData(id, _)) =>
+      case (uId, FacebookPostData(id, _, _)) =>
         userLastFacebookPost.get(uId) match {
           case None => userLastFacebookPost += uId -> id
           case Some(oldPost) if oldPost != id =>
