@@ -32,4 +32,8 @@ class LogInUserFacade(usersRepository: UsersRepository,
       .copy(fbProfilePicture = maybeProfilePicture)
 
   }
+
+  override def getAllUser(): Seq[User] = {
+    usersRepository.getAll.map(_.userId).map(getUser)
+  }
 }

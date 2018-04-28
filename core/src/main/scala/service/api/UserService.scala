@@ -10,4 +10,6 @@ trait UserService {
   def lastLocations(): Map[UserId, Location]
 
   def getUser(userId: UserId): User
+
+  def getAllUser(): Seq[User]
 }

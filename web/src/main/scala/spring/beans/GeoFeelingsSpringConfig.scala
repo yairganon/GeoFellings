@@ -72,9 +72,9 @@ class GeoFeelingsSpringConfig {
 
   @Bean
   def adminController(questionsService: QuestionsService,
-                      usersRepository: UsersRepository,
+                      userService: UserService,
                       triggerService: TriggerService): AdminController = {
-    new AdminController(questionsService, usersRepository, triggerService)
+    new AdminController(questionsService, userService, triggerService)
   }
 
   @Bean

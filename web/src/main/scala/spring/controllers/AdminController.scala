@@ -1,9 +1,8 @@
 package spring.controllers
 
-import coreLogic.repos.UsersRepository
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
-import service.api.{QuestionsService, TriggerService}
+import service.api.{QuestionsService, TriggerService, UserService}
 import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest, CreateTriggerRequest}
 import util.{QuestionnaireId, UserId}
 import views.ToViews._
@@ -12,7 +11,7 @@ import views._
 @Controller
 @RequestMapping(Array("/api/admin"))
 class AdminController(questionsService: QuestionsService,
-                      usersRepository: UsersRepository,
+                      userService: UserService,
                       triggerService: TriggerService) {
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("question"))
@@ -46,13 +45,13 @@ class AdminController(questionsService: QuestionsService,
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("user"))
   @ResponseBody
   def getUsers: UsersView = {
-    UsersView(usersRepository.getAll.map(_.toView))
+    UsersView(userService.getAllUser().map(_.toView))
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("user/{userId}"))
   @ResponseBody
   def getUser(@PathVariable("userId") userId: UserId): FullUserView = {
-    val user = usersRepository.get(userId)
+    val user = userService.getUser(userId)
     FullUserView(
       user.userId.getId,
       user.userName,
