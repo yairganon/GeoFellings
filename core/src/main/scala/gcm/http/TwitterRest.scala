@@ -35,7 +35,7 @@ object FacebookRest {
   def lastPostOf(userToken: String): Option[FacebookPostData] = {
     val request = HttpRequest(
       method = GET,
-      uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2)&access_token=$userToken")
+      uri = s"https://graph.facebook.com/v2.12/me?fields=posts.limit(2){full_picture, message}&access_token=$userToken")
     val eventualResponse = pipeline(request).map(data => {
       data.entity.asString.fromJsonString[FacebookResponse]
     })
@@ -68,7 +68,7 @@ case class FacebookPosts(data: Seq[FacebookPostData])
 
 case class FacebookPostData(id: String,
                             message: String,
-                            image: Option[String])
+                            full_picture: Option[String])
 
 case class FacebookPictureResponse(picture: FacebookPicture)
 
