@@ -24,8 +24,8 @@ class AppUsersController(registrationService: RegistrationService,
   private val id2 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire-2", true, true, Seq(qId1, qId2, qId3)))
   registrationService.registerUser(UserRegisterRequest("1", "1", Gender.MALE, 26, None))
   triggerService.addTrigger(CreateTriggerRequest("Trigger Name", id1, None, Some(SocialNetworkTrigger(true)), None))
-  questionsService.addQuestionnaireTo(userService.getAllUser()(1).userId, id1)
-  questionsService.addQuestionnaireTo(userService.getAllUser()(1).userId, id2)
+  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id1)
+  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id2)
 
   @RequestMapping(method = Array(POST), value = Array("login"))
   @ResponseBody
