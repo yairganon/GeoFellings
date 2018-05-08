@@ -9,7 +9,7 @@ import util.Utils._
 
 import scala.collection.JavaConverters._
 
-class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsRepository {
+class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsRepository with GeoServerRowMapper{
 
   override def add(question: Question): QuestionId = {
     val sql =
@@ -29,7 +29,13 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsR
 
   override def add(questionnaire: Questionnaire): Unit = ???
 
-  override def getQuestions: Seq[Question] = ???
+  override def getQuestions: Seq[Question] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.questions;
+      """.stripMargin
+    template.query(sql, Map.empty[String, String].asJava, rowMapper[Question]).asScala
+  }
 
   override def getQuestionnaires: Seq[Questionnaire] = ???
 
