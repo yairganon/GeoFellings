@@ -1,11 +1,12 @@
 package coreLogic.repos.mySql
 
 import coreLogic.repos.TriggerRepository
-import org.springframework.jdbc.core.JdbcTemplate
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{LocationTrigger, Trigger}
 import util.QuestionnaireId
 
-class MySqlTriggerRepo(template: JdbcTemplate) extends TriggerRepository {
+class MySqlTriggerRepo(template: NamedParameterJdbcTemplate) extends TriggerRepository {
 
   override def getAll(): Seq[Trigger] = ???
 

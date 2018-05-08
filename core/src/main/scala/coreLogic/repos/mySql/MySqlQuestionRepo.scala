@@ -1,13 +1,15 @@
 package coreLogic.repos.mySql
 
 import coreLogic.repos.QuestionsRepository
-import org.springframework.jdbc.core.JdbcTemplate
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{Question, Questionnaire, QuestionnaireAnswer}
 import util.{QuestionId, QuestionnaireId, UserId}
 import util.Utils._
+
 import scala.collection.JavaConverters._
 
-class MySqlQuestionRepo(template: JdbcTemplate) extends QuestionsRepository {
+class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsRepository {
 
   override def add(question: Question): QuestionId = {
     val sql =
@@ -18,7 +20,7 @@ class MySqlQuestionRepo(template: JdbcTemplate) extends QuestionsRepository {
         |`data` = :data;
       """.stripMargin
     val data = question.toJsonString
-    val paramMap: Map[String, Any] = Map(
+    val paramMap = Map(
       "questionId" -> question.id.getId,
       "data" -> data)
     template.update(sql, paramMap.asJava)

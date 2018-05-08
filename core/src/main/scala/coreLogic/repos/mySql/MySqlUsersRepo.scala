@@ -2,11 +2,12 @@ package coreLogic.repos.mySql
 
 import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
-import org.springframework.jdbc.core.JdbcTemplate
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{Location, User}
 import util.UserId
 
-class MySqlUsersRepo(template: JdbcTemplate) extends UsersRepository {
+class MySqlUsersRepo(template: NamedParameterJdbcTemplate) extends UsersRepository {
 
   override def add(user: User): RegisterStatus = ???
 

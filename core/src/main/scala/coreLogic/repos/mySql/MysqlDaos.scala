@@ -1,8 +1,9 @@
 package coreLogic.repos.mySql
 
 import coreLogic.repos._
-import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.DriverManagerDataSource
+import scala.collection.JavaConverters._
 
 import scala.io.Source.fromInputStream
 
@@ -38,8 +39,8 @@ object MysqlDaos {
       .replace("\n", "")
       .split(";")
       .filter(_.nonEmpty)
-    private val storageTemplate = new JdbcTemplate(dataSource)
-    schema.foreach(storageTemplate.execute)
+    private val storageTemplate = new NamedParameterJdbcTemplate(dataSource)
+    schema.foreach(storageTemplate.update(_, Map.empty[String, String].asJava))
 
     val notificationsRepository = new MySqlNotificationsRepo(storageTemplate)
     val questionsRepository = new MySqlQuestionRepo(storageTemplate)

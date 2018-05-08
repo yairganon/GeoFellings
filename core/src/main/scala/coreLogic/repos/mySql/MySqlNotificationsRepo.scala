@@ -2,10 +2,11 @@ package coreLogic.repos.mySql
 
 import coreLogic.repos.NotificationsRepository
 import enums.NotficationStatus
-import org.springframework.jdbc.core.JdbcTemplate
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import util.{QuestionnaireId, UserId}
 
-class MySqlNotificationsRepo(template: JdbcTemplate) extends NotificationsRepository {
+class MySqlNotificationsRepo(template: NamedParameterJdbcTemplate) extends NotificationsRepository {
 
   override def addNotificationTo(userId: UserId, questionnaireId: QuestionnaireId): Unit = ???
 

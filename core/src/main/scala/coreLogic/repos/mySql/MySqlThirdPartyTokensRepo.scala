@@ -1,11 +1,12 @@
 package coreLogic.repos.mySql
 
 import coreLogic.repos.ThirdPartyTokensRepository
-import org.springframework.jdbc.core.JdbcTemplate
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
-class MySqlThirdPartyTokensRepo(template: JdbcTemplate) extends ThirdPartyTokensRepository {
+class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate) extends ThirdPartyTokensRepository {
 
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit = ???
 
