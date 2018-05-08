@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import coreLogic._
 import coreLogic.repos._
 import coreLogic.repos.inMemory._
+import coreLogic.repos.mySql.MysqlDaos
 import gcm.http.{HttpGcm, SendPushNotification}
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
@@ -24,6 +25,11 @@ class GeoFeelingsSpringConfig {
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     jsonConverter.setObjectMapper(mapper)
     jsonConverter
+  }
+
+  @Bean
+  def daos: Daos = {
+    MysqlDaos.getInstance()
   }
 
   @Bean
