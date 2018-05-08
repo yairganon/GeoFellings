@@ -19,7 +19,7 @@ class MySqlQuestionRepo(template: JdbcTemplate) extends QuestionsRepository {
       """.stripMargin
     val data = question.toJsonString
     val paramMap: Map[String, Any] = Map(
-      "questionId" -> question.id,
+      "questionId" -> question.id.getId,
       "data" -> data)
     template.update(sql, paramMap.asJava)
     question.id
