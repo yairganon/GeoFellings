@@ -3,6 +3,7 @@ package util;
 import java.util.UUID;
 
 public class Guid<T> extends Id<String, T> {
+    public Guid() {super("");}
     public Guid(UUID id) {
         super(id.toString());
     }
