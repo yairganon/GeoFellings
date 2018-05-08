@@ -25,6 +25,9 @@ object JdbcConnect {
 
     schema.foreach(storageTemplate.execute)
   } catch {
-    case e: Throwable => e.printStackTrace()
+    case e: Throwable =>
+      println("*" * 200)
+      e.printStackTrace()
+      println("*" * 200)
   }
 }
