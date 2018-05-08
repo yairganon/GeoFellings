@@ -42,10 +42,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def notificationService(
-    notificationTokenRepository: NotificationTokenRepository,
-    sendPushNotification: SendPushNotification
-  ): NotificationService = {
+  def notificationService(notificationTokenRepository: NotificationTokenRepository,
+                          sendPushNotification: SendPushNotification): NotificationService = {
     new NotificationService(notificationTokenRepository, sendPushNotification)
   }
 
@@ -66,6 +64,11 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
+  def thirdPartyTokensRepository: ThirdPartyTokensRepository = {
+    new InMemoryThirdPartyTokensRepo
+  }
+
+  @Bean
   def triggerService(triggerRepository: TriggerRepository): TriggerService = {
     new TriggerFacade(triggerRepository)
   }
@@ -78,10 +81,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def rootController(
-    notificationTokenRepository: NotificationTokenRepository,
-    notificationService: NotificationService
-  ): RootController =
+  def rootController(notificationTokenRepository: NotificationTokenRepository,
+                     notificationService: NotificationService): RootController =
     new RootController(notificationTokenRepository, notificationService)
 
   @Bean
@@ -93,13 +94,13 @@ class GeoFeelingsSpringConfig {
   def scheduleTasks(thirdPartyService: ThirdPartyService,
                     questionsService: QuestionsService,
                     triggerService: TriggerService,
-                    userService: UserService): ScheduleTasks ={
+                    userService: UserService): ScheduleTasks = {
     new ScheduleTasks(thirdPartyService, questionsService, triggerService, userService)
   }
 
   @Bean
-  def thirdPartyService: ThirdPartyService = {
-    new ThirdPartyFacade()
+  def thirdPartyService(thirdPartyTokensRepository: ThirdPartyTokensRepository): ThirdPartyService = {
+    new ThirdPartyFacade(thirdPartyTokensRepository)
   }
 
   @Bean

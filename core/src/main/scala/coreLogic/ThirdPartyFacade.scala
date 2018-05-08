@@ -1,34 +1,30 @@
 package coreLogic
 
+import coreLogic.repos.ThirdPartyTokensRepository
 import gcm.http.{FacebookPostData, FacebookRest, TwitterRest}
 import service.api.ThirdPartyService
 import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
-import scala.collection.mutable
-
-class ThirdPartyFacade() extends ThirdPartyService{
-
-  val twitterRepo = mutable.HashMap.empty[(UserId), TwitterTokens]
-  val facebookRepo = mutable.HashMap.empty[(UserId), FacebookToken]
+class ThirdPartyFacade(repo: ThirdPartyTokensRepository) extends ThirdPartyService {
 
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit =
-    twitterRepo += userId -> twitterTokens
+    repo.storeTwitterTokens(userId, twitterTokens)
 
   override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken]) = {
-    (twitterRepo.get(userId), facebookRepo.get(userId))
+    repo.tokens(userId)
   }
 
   override def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit = {
-    facebookRepo += userId -> facebookToken
+    repo.storeFacebookToken(userId, facebookToken)
   }
 
-  override def removeTwitterTokens(userId: UserId): Unit = twitterRepo.remove(userId)
+  override def removeTwitterTokens(userId: UserId): Unit = repo.removeTwitterTokens(userId)
 
-  override def removeFacebookTokens(userId: UserId): Unit = facebookRepo.remove(userId)
+  override def removeFacebookTokens(userId: UserId): Unit = repo.removeFacebookTokens(userId)
 
   override def userLastPost(userId: UserId): Option[FacebookPostData] = {
-    facebookRepo.get(userId).flatMap(token => {
+    tokens(userId)._2.flatMap(token => {
       FacebookRest.lastPostOf(token.token)
     })
   }
@@ -43,14 +39,14 @@ class ThirdPartyFacade() extends ThirdPartyService{
 
   override def usersLastPosts(): Seq[(UserId, FacebookPostData)] = {
     for {
-      (userId, tokens) <- facebookRepo.toSeq
+      (userId, tokens) <- repo.allFacebookTokens
       post <- FacebookRest.lastPostOf(tokens.token)
     } yield (userId, post)
   }
 
   override def usersLastTweet(): Seq[(UserId, String)] = {
     for {
-      (userId, tokens) <- twitterRepo.toSeq
+      (userId, tokens) <- repo.allTwitterTokens
       tweet <- TwitterRest.lastTweetOf(tokens.id)
     } yield (userId, tweet.id_str)
   }
