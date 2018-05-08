@@ -6,4 +6,5 @@ CREATE TABLE IF NOT EXISTS `geoFeelings.questions` (
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`questionId`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
