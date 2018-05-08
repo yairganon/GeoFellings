@@ -3,7 +3,7 @@ package coreLogic.repos.mySql
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 
-object JdbcConnect extends App{
+object JdbcConnect {
 
   val driver = "com.mysql.jdbc.Driver"
   val url = "jdbc:mysql://localhost/mysql"
@@ -12,7 +12,7 @@ object JdbcConnect extends App{
 
   try {
     val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql"))
-      .mkString.replace("\n","")
+      .mkString.replace("\n", "")
       .split(";")
       .filter(_.nonEmpty)
     Class.forName(driver)
