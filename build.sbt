@@ -24,6 +24,7 @@ lazy val core = (project in file("core"))
         "com.typesafe.akka" %% "akka-testkit" % akkaV % "test"
       )
     },
+    libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.16",
     libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.3",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7",
     libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.7",
