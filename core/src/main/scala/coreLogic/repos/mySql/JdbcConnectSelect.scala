@@ -16,9 +16,9 @@ object JdbcConnectSelect {
     connection = DriverManager.getConnection(url, username, password)
 
 
-    val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql")).mkString
+    val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql")).mkString.split(";")
     val statement = connection.createStatement()
-    statement.executeUpdate(schema)
+    schema.foreach(statement.executeUpdate)
   } catch {
     case e: Throwable => e.printStackTrace()
   }
