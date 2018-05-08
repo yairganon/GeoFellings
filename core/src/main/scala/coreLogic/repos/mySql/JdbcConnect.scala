@@ -26,7 +26,7 @@ object JdbcConnect extends App{
     dataSource.setPassword(password)
     val storageTemplate: JdbcTemplate = new JdbcTemplate(dataSource)
 
-    schema.foreach(storageTemplate.update)
+    schema.foreach(storageTemplate.execute)
   } catch {
     case e: Throwable => e.printStackTrace()
   }
