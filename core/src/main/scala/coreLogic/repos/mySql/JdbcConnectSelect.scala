@@ -14,9 +14,12 @@ object JdbcConnectSelect {
   try {
     Class.forName(driver)
     connection = DriverManager.getConnection(url, username, password)
-    val schema = scala.io.Source.fromURL(getClass.getResource("db/schema.sql")).mkString
     val statement = connection.createStatement()
-    val resultSet = statement.executeQuery(schema)
+    val resultSet = statement.executeQuery("CREATE DATABASE IF NOT EXISTS `geoFeelings`;\n\nCREATE TABLE IF NOT " +
+      "EXISTS `geoFeelings.questions` (\n  `questionId` varchar(50) NOT NULL,\n  `data` mediumblob,\n  " +
+      "`creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `update_date` timestamp NOT NULL DEFAULT " +
+      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`questionId`)\n) ENGINE=InnoDB DEFAULT " +
+      "CHARSET=utf8;")
     while(resultSet.next()) {
       val host = resultSet.getString("host")
       val user = resultSet.getString("user")
