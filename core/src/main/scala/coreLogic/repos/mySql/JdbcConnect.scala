@@ -1,7 +1,5 @@
 package coreLogic.repos.mySql
 
-import java.sql.Connection
-
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 
@@ -11,7 +9,6 @@ object JdbcConnect extends App{
   val url = "jdbc:mysql://localhost/mysql"
   val username = "root"
   val password = "1q2w3e4r"
-  var connection: Connection = _
 
   try {
     val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql"))
@@ -30,5 +27,4 @@ object JdbcConnect extends App{
   } catch {
     case e: Throwable => e.printStackTrace()
   }
-  connection.close()
 }
