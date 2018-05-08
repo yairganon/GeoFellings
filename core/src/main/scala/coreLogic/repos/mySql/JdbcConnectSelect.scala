@@ -15,10 +15,10 @@ object JdbcConnectSelect {
     Class.forName(driver)
     connection = DriverManager.getConnection(url, username, password)
     val statement = connection.createStatement()
-    statement.executeUpdate("CREATE DATABASE IF NOT EXISTS `geoFeelings`;\n\nCREATE TABLE IF NOT " +
-      "EXISTS `geoFeelings.questions` (\n  `questionId` varchar(50) NOT NULL,\n  `data` mediumblob,\n  " +
-      "`creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `update_date` timestamp NOT NULL DEFAULT " +
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`questionId`)\n) ENGINE=InnoDB DEFAULT " +
+    statement.executeUpdate("CREATE DATABASE IF NOT EXISTS `geoFeelings`;CREATE TABLE IF NOT " +
+      "EXISTS `geoFeelings.questions` (`questionId` varchar(50) NOT NULL,  `data` mediumblob,  " +
+      "`creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `update_date` timestamp NOT NULL DEFAULT " +
+      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  PRIMARY KEY (`questionId`)) ENGINE=InnoDB DEFAULT " +
       "CHARSET=utf8;")
   } catch {
     case e: Throwable => e.printStackTrace()
