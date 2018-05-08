@@ -1,12 +1,12 @@
 package spring
 
-import coreLogic.repos.mySql.JdbcConnectSelect
+import coreLogic.repos.mySql.JdbcConnect
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
 object Application extends App {
-  JdbcConnectSelect
+  JdbcConnect
   SpringApplication.run(classOf[BootConfig])
 }
 
