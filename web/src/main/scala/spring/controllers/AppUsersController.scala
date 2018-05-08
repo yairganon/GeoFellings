@@ -20,12 +20,12 @@ class AppUsersController(registrationService: RegistrationService,
   private val qId1 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.RADIO, CreateQuestionData("Question-1", Some(7), None)))
   private val qId2 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.OPEN, CreateQuestionData("Question-2", None, None)))
   private val qId3 = questionsService.addQuestion(CreateQuestionRequest(QuestionType.MULTIPLE, CreateQuestionData("Question-3", None, Some(Seq("opt-1", "opt-2", "opt-3")))))
-  private val id1 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire-1", true, true, Seq(qId1, qId2, qId3)))
-  private val id2 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire-2", true, true, Seq(qId1, qId2, qId3)))
-  registrationService.registerUser(UserRegisterRequest("YairGanon", "1", Gender.MALE, 26, None))
-  triggerService.addTrigger(CreateTriggerRequest("Trigger Name", id1, None, Some(SocialNetworkTrigger(true)), None))
-  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id1)
-  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id2)
+//  private val id1 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire-1", true, true, Seq(qId1, qId2, qId3)))
+//  private val id2 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Questionnaire-2", true, true, Seq(qId1, qId2, qId3)))
+//  registrationService.registerUser(UserRegisterRequest("YairGanon", "1", Gender.MALE, 26, None))
+//  triggerService.addTrigger(CreateTriggerRequest("Trigger Name", id1, None, Some(SocialNetworkTrigger(true)), None))
+//  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id1)
+//  questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id2)
 
   @RequestMapping(method = Array(POST), value = Array("login"))
   @ResponseBody
