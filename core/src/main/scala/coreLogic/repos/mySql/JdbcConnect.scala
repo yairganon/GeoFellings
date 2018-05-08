@@ -5,7 +5,7 @@ import java.sql.Connection
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 
-object JdbcConnect {
+object JdbcConnect extends App{
 
   val driver = "com.mysql.jdbc.Driver"
   val url = "jdbc:mysql://localhost/mysql"
@@ -14,7 +14,10 @@ object JdbcConnect {
   var connection: Connection = _
 
   try {
-
+    val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql"))
+      .mkString.replace("\n","")
+      .split(";")
+      .filter(_.nonEmpty)
     Class.forName(driver)
     val dataSource = new DriverManagerDataSource
     dataSource.setDriverClassName(driver)
@@ -22,7 +25,7 @@ object JdbcConnect {
     dataSource.setUsername(username)
     dataSource.setPassword(password)
     val storageTemplate: JdbcTemplate = new JdbcTemplate(dataSource)
-    val schema = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("db/schema.sql")).mkString.split(";")
+
     schema.foreach(storageTemplate.update)
   } catch {
     case e: Throwable => e.printStackTrace()
