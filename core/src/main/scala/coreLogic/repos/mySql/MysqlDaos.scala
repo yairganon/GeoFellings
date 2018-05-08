@@ -20,6 +20,7 @@ object MysqlDaos {
   }
 
   private class MySqlDaosImpl extends Daos {
+
     private val driver = "com.mysql.jdbc.Driver"
     private val url = "jdbc:mysql://localhost/mysql"
     private val username = "root"
@@ -40,12 +41,12 @@ object MysqlDaos {
     private val storageTemplate = new JdbcTemplate(dataSource)
     schema.foreach(storageTemplate.execute)
 
-    override val notificationsRepository: NotificationsRepository = null
-    override val questionsRepository: QuestionsRepository = null
-    override val notificationTokenRepository: NotificationTokenRepository = null
-    override val triggerRepository: TriggerRepository = null
-    override val usersRepository: UsersRepository = null
-    override val thirdPartyTokensRepository: ThirdPartyTokensRepository = null
+    val notificationsRepository = new MySqlNotificationsRepo(storageTemplate)
+    val questionsRepository = new MySqlQuestionRepo(storageTemplate)
+    val notificationTokenRepository = new MySqlTokenRepo(storageTemplate)
+    val triggerRepository = new MySqlTriggerRepo(storageTemplate)
+    val usersRepository = new MySqlUsersRepo(storageTemplate)
+    val thirdPartyTokensRepository = new MySqlThirdPartyTokensRepo(storageTemplate)
   }
 
 }
