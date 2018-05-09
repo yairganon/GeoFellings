@@ -58,7 +58,6 @@ class GeoFeelingsSpringConfig {
 
   @Bean
   def questionsService(daos: Daos,
-                       questionsRepository: QuestionsRepository,
                        thirdPartyService: ThirdPartyService,
                        notificationsRepository: NotificationsRepository,
                        usersRepository: UsersRepository): QuestionsService = {
@@ -76,8 +75,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def triggerService(triggerRepository: TriggerRepository): TriggerService = {
-    new TriggerFacade(triggerRepository)
+  def triggerService(daos: Daos): TriggerService = {
+    new TriggerFacade(daos.triggerRepository)
   }
 
   @Bean
