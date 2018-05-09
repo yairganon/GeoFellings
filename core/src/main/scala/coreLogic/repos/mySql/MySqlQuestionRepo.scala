@@ -63,7 +63,7 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def getQuestionnaires: Seq[Questionnaire] =  {
+  override def getQuestionnaires: Seq[Questionnaire] = {
     val sql =
       """
         |SELECT `data` FROM geoFeelings.questionnaire;
@@ -71,13 +71,49 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate)
     template.query(sql, Map.empty[String, String].asJava, rowMapper[Questionnaire]).asScala
   }
 
-  override def registerQuestionnaire: Option[Questionnaire] = ???
+  override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.questionnaire
+        |WHERE `questionnaireId` = :questionnaireId;
+      """.stripMargin
+    val paramMap = Map(
+      "questionnaireId" -> questionnaireId.getId)
+    template.query(sql, paramMap.asJava, rowMapper[Questionnaire]).asScala.head
+  }
 
-  override def defaultQuestionnaire: Option[Questionnaire] = ???
+  override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = {
+    val sql =
+      """
+        |INSERT INTO geoFeelings.questionnaireAnswer (userId, questionnaireId, data) VALUES
+        |(:userId, :questionnaireId, :data)
+        |ON DUPLICATE KEY UPDATE
+        |`data` = :data;
+      """.stripMargin
+    val data = questionnaireAnswer.toJsonString
+    val paramMap = Map(
+      "questionnaireId" -> questionnaireAnswer.questionnaireId.getId,
+      "userId" -> questionnaireAnswer.userId.getId,
+      "data" -> data)
+    template.update(sql, paramMap.asJava)
+  }
 
-  override def submit(questionnaireAnswer: QuestionnaireAnswer): Unit = ???
+  override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.questionnaireAnswer;
+        |WHERE `userId` = :userId;
+      """.stripMargin
+    val paramMap = Map(
+      "userId" -> userId.getId)
+    template.query(sql, paramMap.asJava, rowMapper[QuestionnaireAnswer]).asScala
+  }
 
-  override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] = ???
+  override def registerQuestionnaire: Option[Questionnaire] = {
+    getQuestionnaires.find(_.isRegistration)
+  }
 
-  override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = ???
+  override def defaultQuestionnaire: Option[Questionnaire] = {
+    getQuestionnaires.find(_.isDefault)
+  }
 }
