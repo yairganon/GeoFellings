@@ -3,8 +3,11 @@ package util;
 import java.io.Serializable;
 
 public class Id<I extends Comparable<I>, T> implements Serializable, Comparable<Id<I, T>> {
-    private final I id;
+    private  I id;
 
+    Id() {
+        
+    }
     Id(I id) {
         this.id = id;
     }
