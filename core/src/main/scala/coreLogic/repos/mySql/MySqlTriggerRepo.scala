@@ -6,7 +6,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{LocationTrigger, Trigger}
 import util.QuestionnaireId
 
-class MySqlTriggerRepo(template: NamedParameterJdbcTemplate) extends TriggerRepository {
+class MySqlTriggerRepo(template: NamedParameterJdbcTemplate)
+  extends TriggerRepository
+    with GeoServerRowMapper {
 
   override def getAll(): Seq[Trigger] = ???
 

@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{Location, User}
 import util.UserId
 
-class MySqlUsersRepo(template: NamedParameterJdbcTemplate) extends UsersRepository {
+class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
+  extends UsersRepository
+    with GeoServerRowMapper {
 
   override def add(user: User): RegisterStatus = ???
 

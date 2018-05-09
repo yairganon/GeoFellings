@@ -9,7 +9,9 @@ import util.Utils._
 
 import scala.collection.JavaConverters._
 
-class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsRepository with GeoServerRowMapper{
+class MySqlQuestionRepo(template: NamedParameterJdbcTemplate)
+  extends QuestionsRepository
+    with GeoServerRowMapper {
 
   override def add(question: Question): QuestionId = {
     val sql =
@@ -27,8 +29,6 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsR
     question.id
   }
 
-  override def add(questionnaire: Questionnaire): Unit = ???
-
   override def getQuestions: Seq[Question] = {
     val sql =
       """
@@ -36,6 +36,19 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsR
       """.stripMargin
     template.query(sql, Map.empty[String, String].asJava, rowMapper[Question]).asScala
   }
+
+  override def getQuestion(questionId: QuestionId): Question = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.questions
+        |WHERE `questionId` = :questionId;
+      """.stripMargin
+    val paramMap = Map(
+      "questionId" -> questionId.getId)
+    template.query(sql, paramMap.asJava, rowMapper[Question]).asScala.head
+  }
+
+  override def add(questionnaire: Questionnaire): Unit = ???
 
   override def getQuestionnaires: Seq[Questionnaire] = ???
 
@@ -48,6 +61,4 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate) extends QuestionsR
   override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] = ???
 
   override def getQuestionnaire(questionnaireId: QuestionnaireId): Questionnaire = ???
-
-  override def getQuestion(questionId: QuestionId): Question = ???
 }

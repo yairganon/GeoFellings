@@ -6,7 +6,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{FacebookToken, TwitterTokens}
 import util.UserId
 
-class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate) extends ThirdPartyTokensRepository {
+class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
+  extends ThirdPartyTokensRepository
+    with GeoServerRowMapper {
 
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit = ???
 

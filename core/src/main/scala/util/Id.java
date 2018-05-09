@@ -5,9 +5,8 @@ import java.io.Serializable;
 public class Id<I extends Comparable<I>, T> implements Serializable, Comparable<Id<I, T>> {
     private  I id;
 
-    Id() {
-        
-    }
+    Id() { }
+
     Id(I id) {
         this.id = id;
     }

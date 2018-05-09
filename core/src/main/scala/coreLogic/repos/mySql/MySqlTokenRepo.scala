@@ -4,7 +4,9 @@ import coreLogic.repos.NotificationTokenRepository
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
-class MySqlTokenRepo(template: NamedParameterJdbcTemplate) extends NotificationTokenRepository {
+class MySqlTokenRepo(template: NamedParameterJdbcTemplate)
+  extends NotificationTokenRepository
+    with GeoServerRowMapper {
 
   override def addToken(token: String): Unit = ???
 

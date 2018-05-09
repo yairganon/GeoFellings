@@ -6,7 +6,9 @@ import enums.NotficationStatus
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import util.{QuestionnaireId, UserId}
 
-class MySqlNotificationsRepo(template: NamedParameterJdbcTemplate) extends NotificationsRepository {
+class MySqlNotificationsRepo(template: NamedParameterJdbcTemplate)
+  extends NotificationsRepository
+    with GeoServerRowMapper {
 
   override def addNotificationTo(userId: UserId, questionnaireId: QuestionnaireId): Unit = ???
 
