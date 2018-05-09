@@ -48,9 +48,28 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate)
     template.query(sql, paramMap.asJava, rowMapper[Question]).asScala.head
   }
 
-  override def add(questionnaire: Questionnaire): Unit = ???
+  override def add(questionnaire: Questionnaire): Unit = {
+    val sql =
+      """
+        |INSERT INTO geoFeelings.questionnaire (questionnaireId, data) VALUES
+        |(:questionnaireId, :data)
+        |ON DUPLICATE KEY UPDATE
+        |`data` = :data;
+      """.stripMargin
+    val data = questionnaire.toJsonString
+    val paramMap = Map(
+      "questionnaireId" -> questionnaire.id.getId,
+      "data" -> data)
+    template.update(sql, paramMap.asJava)
+  }
 
-  override def getQuestionnaires: Seq[Questionnaire] = ???
+  override def getQuestionnaires: Seq[Questionnaire] =  {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.questionnaire;
+      """.stripMargin
+    template.query(sql, Map.empty[String, String].asJava, rowMapper[Questionnaire]).asScala
+  }
 
   override def registerQuestionnaire: Option[Questionnaire] = ???
 
