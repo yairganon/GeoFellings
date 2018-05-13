@@ -101,7 +101,7 @@ class MySqlQuestionRepo(template: NamedParameterJdbcTemplate)
   override def getAnswers(userId: UserId): Seq[QuestionnaireAnswer] = {
     val sql =
       """
-        |SELECT `data` FROM geoFeelings.questionnaireAnswer;
+        |SELECT `data` FROM geoFeelings.questionnaireAnswer
         |WHERE `userId` = :userId;
       """.stripMargin
     val paramMap = Map(
