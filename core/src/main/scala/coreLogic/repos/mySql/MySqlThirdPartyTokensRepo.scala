@@ -2,7 +2,7 @@ package coreLogic.repos.mySql
 
 import coreLogic.repos.ThirdPartyTokensRepository
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import service.dto.{FacebookTokenDo, Location, TwitterTokens}
+import service.dto.{FacebookTokenDo, TwitterTokens}
 import util.UserId
 import util.Utils._
 
@@ -21,7 +21,7 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
           |WHERE `userId` = :userId;
         """.stripMargin
       val paramMap = Map(
-        "userId" -> userId)
+        "userId" -> userId.getId)
       val fbToken = template.query(sql, paramMap.asJava, rowMapper[FacebookTokenDo]).asScala.headOption
     (None, fbToken)
   }

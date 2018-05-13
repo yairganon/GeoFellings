@@ -1,7 +1,7 @@
 package coreLogic.repos.inMemory
 
 import coreLogic.repos.ThirdPartyTokensRepository
-import service.dto.{FacebookToken, FacebookTokenDo, TwitterTokens}
+import service.dto.{FacebookTokenDo, TwitterTokens}
 import util.UserId
 
 import scala.collection.mutable
