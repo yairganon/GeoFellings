@@ -34,6 +34,7 @@ class AppUsersController(registrationService: RegistrationService,
       println("*" * 50)
       println(e)
       println("*" * 50)
+    case _ =>
   }
 
   @RequestMapping(method = Array(POST), value = Array("login"))
