@@ -1,8 +1,8 @@
 package coreLogic.repos.mySql
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
 import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{Location, User}
 import util.UserId
@@ -29,7 +29,7 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
       "data" -> data)
     Try(template.update(sql, paramMap.asJava)) match {
       case Success(_) => RegisterStatus.CREATED
-      case Failure(_: MySQLIntegrityConstraintViolationException) => RegisterStatus.CONFLICT
+      case Failure(_: DuplicateKeyException) => RegisterStatus.CONFLICT
       case Failure(e) => throw e
     }
   }
@@ -81,7 +81,16 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
   }
 
   override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {
-
+    val sql =
+      """
+        |INSERT INTO geoFeelings.userLocations (userId, data) VALUES
+        |(:userId, :data);
+      """.stripMargin
+    val data = location.toJsonString
+    val paramMap = Map(
+      "userId" -> userId.getId,
+      "data" -> data)
+    template.update(sql, paramMap.asJava)
   }
 
   override def getUserLastLocation(userId: UserId): Option[Location] = None
