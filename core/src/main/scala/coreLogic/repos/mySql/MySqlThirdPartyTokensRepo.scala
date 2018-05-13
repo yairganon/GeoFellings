@@ -37,6 +37,8 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
   }
 
   override def storeTwitterTokens(twitterTokens: TwitterTokensDo): Unit = {
+    println("Hey Hey")
+    println(twitterTokens)
     val sql =
       """
         |INSERT INTO geoFeelings.twitterTokens (userId, data) VALUES
