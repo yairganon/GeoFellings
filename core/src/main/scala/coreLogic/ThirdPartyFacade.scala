@@ -39,16 +39,16 @@ class ThirdPartyFacade(repo: ThirdPartyTokensRepository) extends ThirdPartyServi
 
   override def usersLastPosts(): Seq[(UserId, FacebookPostData)] = {
     for {
-      (userId, tokens) <- repo.allFacebookTokens
+      tokens <- repo.allFacebookTokens
       post <- FacebookRest.lastPostOf(tokens.token)
-    } yield (userId, post)
+    } yield (tokens.userId, post)
   }
 
   override def usersLastTweet(): Seq[(UserId, String)] = {
     for {
-      (userId, tokens) <- repo.allTwitterTokens
+      tokens <- repo.allTwitterTokens
       tweet <- TwitterRest.lastTweetOf(tokens.id)
-    } yield (userId, tweet.id_str)
+    } yield (tokens.userId, tweet.id_str)
   }
 
 }

@@ -15,7 +15,7 @@ trait ThirdPartyTokensRepository {
 
   def removeFacebookTokens(userId: UserId): Unit
 
-  def allTwitterTokens: Seq[(UserId, TwitterTokensDo)]
+  def allTwitterTokens: Seq[TwitterTokensDo]
 
-  def allFacebookTokens: Seq[(UserId, FacebookTokenDo)]
+  def allFacebookTokens: Seq[FacebookTokenDo]
 }

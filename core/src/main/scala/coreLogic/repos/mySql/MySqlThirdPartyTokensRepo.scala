@@ -86,7 +86,7 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def allTwitterTokens: Seq[(UserId, TwitterTokensDo)] = Seq.empty
+  override def allTwitterTokens: Seq[TwitterTokensDo] = Seq.empty
 
-  override def allFacebookTokens: Seq[(UserId, FacebookTokenDo)] = Seq.empty
+  override def allFacebookTokens: Seq[FacebookTokenDo] = Seq.empty
 }
