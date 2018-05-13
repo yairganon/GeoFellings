@@ -93,5 +93,14 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def getUserLastLocation(userId: UserId): Option[Location] = None
+  override def getUserLastLocation(userId: UserId): Option[Location] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.userLocations
+        |WHERE `userId` = :userId ORDER BY creation_date DESC LIMIT 1;
+      """.stripMargin
+    val paramMap = Map(
+      "userId" -> userId)
+    template.query(sql, paramMap.asJava, rowMapper[Location]).asScala.headOption
+  }
 }
