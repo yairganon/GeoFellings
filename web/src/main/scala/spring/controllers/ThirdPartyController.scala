@@ -34,7 +34,7 @@ class ThirdPartyController(thirdPartyService: ThirdPartyService) {
   @ResponseBody
   def getTwitterTokens(@RequestHeader(value = "userId") userId: UserId): SocialNetworkTokens = {
     val tokens = thirdPartyService.tokens(userId)
-    SocialNetworkTokens(tokens._1, tokens._2)
+    SocialNetworkTokens(tokens._1, tokens._2.map(fbt => FacebookToken(fbt.token)))
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("facebook"))

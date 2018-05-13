@@ -1,15 +1,15 @@
 package coreLogic.repos
 
-import service.dto.{FacebookToken, TwitterTokens}
+import service.dto.{FacebookTokenDo, TwitterTokens}
 import util.UserId
 
 trait ThirdPartyTokensRepository {
 
   def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit
 
-  def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken])
+  def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookTokenDo])
 
-  def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit
+  def storeFacebookToken(facebookToken: FacebookTokenDo): Unit
 
   def removeTwitterTokens(userId: UserId): Unit
 
@@ -17,5 +17,5 @@ trait ThirdPartyTokensRepository {
 
   def allTwitterTokens: Seq[(UserId, TwitterTokens)]
 
-  def allFacebookTokens: Seq[(UserId, FacebookToken)]
+  def allFacebookTokens: Seq[(UserId, FacebookTokenDo)]
 }

@@ -1,7 +1,7 @@
 package service.dto
 
 import enums.{Gender, QuestionType}
-import util.{QuestionId, QuestionnaireId}
+import util.{QuestionId, QuestionnaireId, UserId}
 
 case class RegisterTokenRequest(token: String)
 
@@ -28,6 +28,8 @@ case class UserRegisterRequest(userName: String,
 case class TwitterTokens(accessToken: String, accessTokenSecret: String, id: Long, name: String)
 
 case class FacebookToken(token: String)
+
+case class FacebookTokenDo(userId: UserId, token: String)
 
 case class QuestionnaireAnswerRequest(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
 

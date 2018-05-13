@@ -3,7 +3,7 @@ package coreLogic
 import coreLogic.repos.ThirdPartyTokensRepository
 import gcm.http.{FacebookPostData, FacebookRest, TwitterRest}
 import service.api.ThirdPartyService
-import service.dto.{FacebookToken, TwitterTokens}
+import service.dto.{FacebookToken, FacebookTokenDo, TwitterTokens}
 import util.UserId
 
 class ThirdPartyFacade(repo: ThirdPartyTokensRepository) extends ThirdPartyService {
@@ -11,12 +11,12 @@ class ThirdPartyFacade(repo: ThirdPartyTokensRepository) extends ThirdPartyServi
   override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit =
     repo.storeTwitterTokens(userId, twitterTokens)
 
-  override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken]) = {
+  override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookTokenDo]) = {
     repo.tokens(userId)
   }
 
   override def storeFacebookToken(userId: UserId, facebookToken: FacebookToken): Unit = {
-    repo.storeFacebookToken(userId, facebookToken)
+    repo.storeFacebookToken(FacebookTokenDo(userId, facebookToken.token))
   }
 
   override def removeTwitterTokens(userId: UserId): Unit = repo.removeTwitterTokens(userId)

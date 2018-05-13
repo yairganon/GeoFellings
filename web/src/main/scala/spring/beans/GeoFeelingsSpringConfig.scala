@@ -68,8 +68,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def thirdPartyTokensRepository: ThirdPartyTokensRepository = {
-    new InMemoryThirdPartyTokensRepo
+  def thirdPartyTokensRepository(daos: Daos): ThirdPartyTokensRepository = {
+    daos.thirdPartyTokensRepository
   }
 
   @Bean

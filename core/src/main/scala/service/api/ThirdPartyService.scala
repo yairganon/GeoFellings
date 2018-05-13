@@ -1,14 +1,14 @@
 package service.api
 
 import gcm.http.FacebookPostData
-import service.dto.{FacebookToken, TwitterTokens}
+import service.dto.{FacebookToken, FacebookTokenDo, TwitterTokens}
 import util.UserId
 
 trait ThirdPartyService {
 
   def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit
 
-  def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookToken])
+  def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookTokenDo])
 
   def removeTwitterTokens(userId: UserId): Unit
 
