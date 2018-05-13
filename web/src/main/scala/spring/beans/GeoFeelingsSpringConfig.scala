@@ -43,9 +43,7 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def registrationRepo(daos: Daos): UsersRepository = {
-    daos.usersRepository
-  }
+  def registrationRepo(daos: Daos): UsersRepository = daos.usersRepository
 
   @Bean
   def notificationService(notificationTokenRepository: NotificationTokenRepository,

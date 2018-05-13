@@ -59,9 +59,9 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     template.query(sql, paramMap.asJava, rowMapper[User]).asScala.headOption.map(_.userId)
   }
 
-  override def update(user: User): Unit = ???
+  override def update(user: User): Unit = {}
 
-  override def setUserCurrentLocation(userId: UserId, location: Location): Unit = ???
+  override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {}
 
-  override def getUserLastLocation(userId: UserId): Option[Location] = ???
+  override def getUserLastLocation(userId: UserId): Option[Location] = None
 }
