@@ -51,7 +51,7 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
   override def isExist(userName: String, passWord: String): Option[UserId] = {
     val sql =
       """
-        |SELECT `data` FROM geoFeelings.users WHERE `userName` = :userId and `passWord` = :passWord;
+        |SELECT `data` FROM geoFeelings.users WHERE `userName` = :userName and `passWord` = :passWord;
       """.stripMargin
     val paramMap = Map(
       "userName" -> userName,
