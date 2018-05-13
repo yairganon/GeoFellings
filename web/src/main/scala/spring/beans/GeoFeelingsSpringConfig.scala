@@ -92,8 +92,8 @@ class GeoFeelingsSpringConfig {
     new RootController(notificationTokenRepository, notificationService)
 
   @Bean
-  def registrationService(registrationRepo: UsersRepository): RegistrationService = {
-    new RegistrationFacade(registrationRepo)
+  def registrationService(daos: Daos): RegistrationService = {
+    new RegistrationFacade(daos.usersRepository)
   }
 
   @Bean
