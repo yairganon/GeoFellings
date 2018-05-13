@@ -43,8 +43,8 @@ class GeoFeelingsSpringConfig {
   }
 
   @Bean
-  def registrationRepo: UsersRepository = {
-    new InMemoryUsersRepo
+  def registrationRepo(daos: Daos): UsersRepository = {
+    daos.usersRepository
   }
 
   @Bean
@@ -92,8 +92,8 @@ class GeoFeelingsSpringConfig {
     new RootController(notificationTokenRepository, notificationService)
 
   @Bean
-  def registrationService(daos: Daos): RegistrationService = {
-    new RegistrationFacade(daos.usersRepository)
+  def registrationService(registrationRepo: UsersRepository): RegistrationService = {
+    new RegistrationFacade(registrationRepo)
   }
 
   @Bean
