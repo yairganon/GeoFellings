@@ -37,8 +37,6 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
   }
 
   override def storeTwitterTokens(twitterTokens: TwitterTokensDo): Unit = {
-    println("Hey Hey")
-    println(twitterTokens)
     val sql =
       """
         |INSERT INTO geoFeelings.twitterTokens (userId, data) VALUES
@@ -88,7 +86,19 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def allTwitterTokens: Seq[TwitterTokensDo] = Seq.empty
+  override def allTwitterTokens: Seq[TwitterTokensDo] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.twitterTokens;
+      """.stripMargin
+    template.query(sql, Map.empty[String, String].asJava, rowMapper[TwitterTokensDo]).asScala
+  }
 
-  override def allFacebookTokens: Seq[FacebookTokenDo] = Seq.empty
+  override def allFacebookTokens: Seq[FacebookTokenDo] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.facebookTokens;
+      """.stripMargin
+    template.query(sql, Map.empty[String, String].asJava, rowMapper[FacebookTokenDo]).asScala
+  }
 }
