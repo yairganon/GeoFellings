@@ -40,7 +40,13 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     template.query(sql, paramMap.asJava, rowMapper[User]).asScala.head
   }
 
-  override def getAll: Seq[User] = ???
+  override def getAll: Seq[User] = {
+    val sql =
+      """
+        |SELECT `data` FROM geoFeelings.users;
+      """.stripMargin
+    template.query(sql,  Map.empty[String, String].asJava, rowMapper[User]).asScala
+  }
 
   override def isExist(userName: String, passWord: String): Option[UserId] = {
     val sql =
