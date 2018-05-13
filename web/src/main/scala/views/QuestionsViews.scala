@@ -47,4 +47,4 @@ case class TriggerView(id: String,
                        timeRangeTrigger: Option[TimeRangeTrigger])
 
 
-case class SocialNetworkTokens(twitter: Option[TwitterTokens], facebook: Option[FacebookToken])
+case class SocialNetworkTokens(twitter: Option[TwitterTokensDo], facebook: Option[FacebookTokenDo])

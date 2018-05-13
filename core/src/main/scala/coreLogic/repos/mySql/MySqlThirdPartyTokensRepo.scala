@@ -2,7 +2,7 @@ package coreLogic.repos.mySql
 
 import coreLogic.repos.ThirdPartyTokensRepository
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import service.dto.{FacebookTokenDo, TwitterTokens}
+import service.dto.{FacebookTokenDo, TwitterTokensDo}
 import util.UserId
 import util.Utils._
 
@@ -12,18 +12,43 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
   extends ThirdPartyTokensRepository
     with GeoServerRowMapper {
 
-  override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit = ???
 
-  override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookTokenDo]) = {
+  override def tokens(userId: UserId): (Option[TwitterTokensDo], Option[FacebookTokenDo]) = {
+    val paramMap = Map("userId" -> userId.getId)
+
+    def facebookTokens() = {
       val sql =
         """
           |SELECT `data` FROM geoFeelings.facebookTokens
           |WHERE `userId` = :userId;
         """.stripMargin
-      val paramMap = Map(
-        "userId" -> userId.getId)
-      val fbToken = template.query(sql, paramMap.asJava, rowMapper[FacebookTokenDo]).asScala.headOption
-    (None, fbToken)
+      template.query(sql, paramMap.asJava, rowMapper[FacebookTokenDo]).asScala.headOption
+    }
+
+    def twitterTokens() = {
+      val sql =
+        """
+          |SELECT `data` FROM geoFeelings.twitterTokens
+          |WHERE `userId` = :userId;
+        """.stripMargin
+      template.query(sql, paramMap.asJava, rowMapper[TwitterTokensDo]).asScala.headOption
+    }
+    (twitterTokens(), facebookTokens())
+  }
+
+  override def storeTwitterTokens(twitterTokens: TwitterTokensDo): Unit = {
+    val sql =
+      """
+        |INSERT INTO geoFeelings.twitterTokens (userId, data) VALUES
+        |(:userId, :data)
+        |ON DUPLICATE KEY UPDATE
+        |`data` = :data;
+      """.stripMargin
+    val data = twitterTokens.toJsonString
+    val paramMap = Map(
+      "userId" -> twitterTokens.userId.getId,
+      "data" -> data)
+    template.update(sql, paramMap.asJava)
   }
 
   override def storeFacebookToken(facebookToken: FacebookTokenDo): Unit = {
@@ -41,7 +66,15 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def removeTwitterTokens(userId: UserId): Unit = ???
+  override def removeTwitterTokens(userId: UserId): Unit = {
+    val sql =
+      """
+        |DELETE FROM geoFeelings.twitterTokens WHERE `userId` = :userId;
+      """.stripMargin
+    val paramMap = Map(
+      "userId" -> userId.getId)
+    template.update(sql, paramMap.asJava)
+  }
 
   override def removeFacebookTokens(userId: UserId): Unit = {
     val sql =
@@ -53,7 +86,7 @@ class MySqlThirdPartyTokensRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def allTwitterTokens: Seq[(UserId, TwitterTokens)] = Seq.empty
+  override def allTwitterTokens: Seq[(UserId, TwitterTokensDo)] = Seq.empty
 
   override def allFacebookTokens: Seq[(UserId, FacebookTokenDo)] = Seq.empty
 }

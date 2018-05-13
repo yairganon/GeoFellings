@@ -1,20 +1,20 @@
 package coreLogic.repos.inMemory
 
 import coreLogic.repos.ThirdPartyTokensRepository
-import service.dto.{FacebookTokenDo, TwitterTokens}
+import service.dto.{FacebookTokenDo, TwitterTokens, TwitterTokensDo}
 import util.UserId
 
 import scala.collection.mutable
 
 class InMemoryThirdPartyTokensRepo extends ThirdPartyTokensRepository {
 
-  val twitterRepo = mutable.HashMap.empty[(UserId), TwitterTokens]
+  val twitterRepo = mutable.HashMap.empty[(UserId), TwitterTokensDo]
   val facebookRepo = mutable.HashMap.empty[(UserId), FacebookTokenDo]
 
-  override def storeTwitterTokens(userId: UserId, twitterTokens: TwitterTokens): Unit =
-    twitterRepo += userId -> twitterTokens
+  override def storeTwitterTokens(twitterTokens: TwitterTokensDo): Unit =
+    twitterRepo += twitterTokens.userId -> twitterTokens
 
-  override def tokens(userId: UserId): (Option[TwitterTokens], Option[FacebookTokenDo]) = {
+  override def tokens(userId: UserId): (Option[TwitterTokensDo], Option[FacebookTokenDo]) = {
     (twitterRepo.get(userId), facebookRepo.get(userId))
   }
 
@@ -26,7 +26,7 @@ class InMemoryThirdPartyTokensRepo extends ThirdPartyTokensRepository {
 
   override def removeFacebookTokens(userId: UserId): Unit = facebookRepo.remove(userId)
 
-  override def allTwitterTokens: Seq[(UserId, TwitterTokens)] = twitterRepo.toSeq
+  override def allTwitterTokens: Seq[(UserId, TwitterTokensDo)] = twitterRepo.toSeq
 
   override def allFacebookTokens: Seq[(UserId, FacebookTokenDo)] = facebookRepo.toSeq
 }

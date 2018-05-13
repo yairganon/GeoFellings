@@ -29,6 +29,8 @@ case class TwitterTokens(accessToken: String, accessTokenSecret: String, id: Lon
 
 case class FacebookToken(token: String)
 
+case class TwitterTokensDo(userId: UserId, accessToken: String, accessTokenSecret: String, id: Long, name: String)
+
 case class FacebookTokenDo(userId: UserId, token: String)
 
 case class QuestionnaireAnswerRequest(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
