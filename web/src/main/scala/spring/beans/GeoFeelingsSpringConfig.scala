@@ -1,6 +1,6 @@
 package spring.beans
 
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, SerializationFeature}
 import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
@@ -22,8 +22,9 @@ class GeoFeelingsSpringConfig {
   def mappingJackson2HttpMessageConverter: MappingJackson2HttpMessageConverter = {
     val jsonConverter = new MappingJackson2HttpMessageConverter
     val mapper = new ObjectMapper() with ScalaObjectMapper
-    mapper.registerModule(DefaultScalaModule)
-    mapper.registerModule(new JodaModule())
+    mapper.registerModules(DefaultScalaModule, new JodaModule)
+      .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+      .configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     jsonConverter.setObjectMapper(mapper)
     jsonConverter
