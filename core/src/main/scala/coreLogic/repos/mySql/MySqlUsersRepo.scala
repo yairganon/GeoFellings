@@ -1,14 +1,15 @@
 package coreLogic.repos.mySql
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
 import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
-
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import service.dto.{Location, User}
 import util.UserId
 import util.Utils._
 
 import scala.collection.JavaConverters._
+import scala.util.{Failure, Success, Try}
 
 class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
   extends UsersRepository
@@ -26,8 +27,11 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
       "userName" -> user.userName,
       "passWord" -> user.password,
       "data" -> data)
-    template.update(sql, paramMap.asJava)
-    RegisterStatus.CREATED
+    Try(template.update(sql, paramMap.asJava)) match {
+      case Success(_) => RegisterStatus.CREATED
+      case Failure(_: MySQLIntegrityConstraintViolationException) => RegisterStatus.CONFLICT
+      case Failure(e) => throw e
+    }
   }
 
   override def get(userId: UserId): User = {
@@ -76,7 +80,9 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     template.update(sql, paramMap.asJava)
   }
 
-  override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {}
+  override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {
+
+  }
 
   override def getUserLastLocation(userId: UserId): Option[Location] = None
 }
