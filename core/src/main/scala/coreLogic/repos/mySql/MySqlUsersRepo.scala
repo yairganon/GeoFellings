@@ -59,7 +59,22 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     template.query(sql, paramMap.asJava, rowMapper[User]).asScala.headOption.map(_.userId)
   }
 
-  override def update(user: User): Unit = {}
+  override def update(user: User): Unit = {
+    val sql =
+      """
+        |UPDATE geoFeelings.users SET
+        |`userName` = :userName,
+        |`passWord` = :passWord,
+        |`data` = :data WHERE `userId` = :userId
+      """.stripMargin
+    val data = user.toJsonString
+    val paramMap = Map(
+      "userId" -> user.userId.getId,
+      "userName" -> user.userName,
+      "passWord" -> user.password,
+      "data" -> data)
+    template.update(sql, paramMap.asJava)
+  }
 
   override def setUserCurrentLocation(userId: UserId, location: Location): Unit = {}
 
