@@ -100,7 +100,7 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
         |WHERE `userId` = :userId ORDER BY creation_date DESC LIMIT 1;
       """.stripMargin
     val paramMap = Map(
-      "userId" -> userId)
+      "userId" -> userId.getId)
     template.query(sql, paramMap.asJava, rowMapper[Location]).asScala.headOption
   }
 }
