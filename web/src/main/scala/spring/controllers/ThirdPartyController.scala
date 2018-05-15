@@ -52,13 +52,11 @@ class ThirdPartyWebHooksController() {
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("twitter"))
   @ResponseBody
   def twitterPostNotification(@RequestBody request: Map[String, String]): Unit = {
-    println(request)
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("twitter"))
   @ResponseBody
   def twitterGetNotification(@RequestParam(value = "crc_token", required = true) crcToken: String): Unit = {
-    println(crcToken)
   }
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("facebook"))
@@ -66,15 +64,11 @@ class ThirdPartyWebHooksController() {
   def facebookGetNotification(@RequestParam(value = "hub.mode", required = false) mode: String,
                               @RequestParam(value = "hub.challenge", required = false) challenge: String,
                               @RequestParam(value = "hub.verify_token", required = false) verify_token: String): String = {
-    println(mode)
-    println(challenge)
-    println(verify_token)
     challenge
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("facebook"))
   @ResponseBody
   def facebookPOSTNotification(@RequestBody request: Map[String, String]): Unit = {
-    println(request)
   }
 }

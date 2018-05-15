@@ -90,7 +90,6 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
   override def addQuestionnaireTo(userId: UserId, questionnaireId: QuestionnaireId): Unit = {
     usersRepository.get(userId).limitQuestionnaire match {
       case Some(limit) if notificationsRepository.getPendingUserNotifications(userId).size >= limit =>
-        println("User limit")
       case _ =>
         notificationsRepository.addNotificationTo(userId, questionnaireId)
     }

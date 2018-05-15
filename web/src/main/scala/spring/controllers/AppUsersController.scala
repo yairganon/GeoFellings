@@ -33,9 +33,6 @@ class AppUsersController(registrationService: RegistrationService,
 //    questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id2)
 //  } match {
 //    case Failure(e) =>
-//      println("*" * 50)
-//      println(e)
-//      println("*" * 50)
 //    case _ =>
 //  }
 
@@ -94,7 +91,6 @@ class AppUsersController(registrationService: RegistrationService,
   @ResponseBody
   def updateUser(@RequestBody request: UpdateUserRequest,
                  @RequestHeader(value = "userId") userId: UserId): Unit = {
-    println(request)
     userService.patchUser(userId, request)
   }
 
