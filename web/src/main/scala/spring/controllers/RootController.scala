@@ -3,16 +3,18 @@ package spring.controllers
 import coreLogic.repos.{NotificationService, NotificationTokenRepository}
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMethod._
-import org.springframework.web.bind.annotation.{RequestBody, RequestMapping, ResponseBody}
-import service.dto.{RegisterTokenRequest, Location}
+import org.springframework.web.bind.annotation.{RequestBody, RequestHeader, RequestMapping, ResponseBody}
+import service.dto.{Location, RegisterTokenRequest}
+import util.UserId
 
 @Controller
 class RootController(tokenRepo: NotificationTokenRepository,
                      notificationService: NotificationService) {
 
-  @RequestMapping(method = Array(POST), value = Array("/registerToken"))
+  @RequestMapping(method = Array(POST), value = Array("api/registerToken"))
   @ResponseBody
-  def registerToken(@RequestBody cmd: RegisterTokenRequest): Unit = {
+  def registerToken(@RequestBody cmd: RegisterTokenRequest,
+                    @RequestHeader(value = "userId") userId: UserId): Unit = {
     tokenRepo.addToken(cmd.token)
     print(cmd)
   }
