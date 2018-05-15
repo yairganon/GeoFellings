@@ -9,7 +9,7 @@ import service.dto.{User, UserLoginRequest, UserRegisterRequest}
 class RegistrationFacadeTest extends Specification {
 
   "RegistrationFacadeTest" should {
-    val registrationFacade: RegistrationService = new RegistrationFacade(new InMemoryUsersRepo)
+    val registrationFacade: RegistrationService = new RegistrationFacade(new InMemoryUsersRepo, null)
     val userName = "random name"
     val passWord = "random password"
     val gender = Gender.MALE
