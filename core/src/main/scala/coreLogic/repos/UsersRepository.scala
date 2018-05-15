@@ -1,10 +1,13 @@
 package coreLogic.repos
 
 import enums.RegisterStatus
-import service.dto.{Location, User}
+import service.dto.{Location, User, UserLocation}
 import util.UserId
 
 trait UsersRepository {
+
+  def locations(): Seq[UserLocation]
+
 
   def add(user: User): RegisterStatus
 

@@ -5,6 +5,8 @@ import util.{QuestionId, QuestionnaireId, UserId}
 
 case class RegisterTokenRequest(token: String)
 
+case class UserLocation(userId: UserId, time: Long, location: Location)
+
 case class Location(latitude: Double, longitude: Double)
 
 case class CreateQuestionRequest(questionType: QuestionType, data: CreateQuestionData)

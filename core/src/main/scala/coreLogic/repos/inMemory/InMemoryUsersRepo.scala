@@ -3,7 +3,7 @@ package coreLogic.repos.inMemory
 import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
 import org.joda.time.DateTime
-import service.dto.{Location, User}
+import service.dto.{Location, User, UserLocation}
 import util.UserId
 
 import scala.collection.mutable
@@ -42,4 +42,6 @@ class InMemoryUsersRepo extends UsersRepository {
       case l => Some(l.maxBy(_._1)._2)
     }
   }
+
+  override def locations():Seq[UserLocation] = Seq.empty
 }

@@ -3,7 +3,7 @@ package coreLogic
 import coreLogic.repos.UsersRepository
 import gcm.http.FacebookRest
 import service.api.{ThirdPartyService, UserService}
-import service.dto.{Location, UpdateUserRequest, User}
+import service.dto.{Location, UpdateUserRequest, User, UserLocation}
 import util.UserId
 
 class LogInUserFacade(usersRepository: UsersRepository,
@@ -38,5 +38,9 @@ class LogInUserFacade(usersRepository: UsersRepository,
 
   override def getAllUser(): Seq[User] = {
     usersRepository.getAll.map(_.userId).map(getUser)
+  }
+
+  override def locations(): Seq[UserLocation] = {
+    usersRepository.locations()
   }
 }

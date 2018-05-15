@@ -3,7 +3,7 @@ package spring.controllers
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, TriggerService, UserService}
-import service.dto.{CreateQuestionRequest, CreateQuestionnaireRequest, CreateTriggerRequest}
+import service.dto._
 import util.{QuestionnaireId, UserId}
 import views.ToViews._
 import views._
@@ -60,6 +60,12 @@ class AdminController(questionsService: QuestionsService,
       user.fbProfilePicture,
       questionsService.getUserQuestionnaires(userId)
     )
+  }
+
+  @RequestMapping(method = Array(RequestMethod.GET), value = Array("users-locations"))
+  @ResponseBody
+  def getUsersLocations(): Seq[UserLocation] = {
+    userService.locations()
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("trigger"))

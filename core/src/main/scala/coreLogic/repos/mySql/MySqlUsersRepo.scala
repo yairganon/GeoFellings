@@ -4,7 +4,7 @@ import coreLogic.repos.UsersRepository
 import enums.RegisterStatus
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import service.dto.{Location, User}
+import service.dto.{Location, User, UserLocation}
 import util.UserId
 import util.Utils._
 
@@ -102,5 +102,13 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
     val paramMap = Map(
       "userId" -> userId.getId)
     template.query(sql, paramMap.asJava, rowMapper[Location]).asScala.headOption
+  }
+
+  override def locations(): Seq[UserLocation] = {
+    val sql =
+      """
+        |SELECT `userId`, `data`, `creation_date` FROM geoFeelings.userLocations ORDER BY userId DESC, ORDER BY creation_date DESC;
+      """.stripMargin
+    template.query(sql, Map.empty[String, String].asJava, rowMapperLocations).asScala
   }
 }
