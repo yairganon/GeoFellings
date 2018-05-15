@@ -14,7 +14,7 @@ class LogInUserFacade(usersRepository: UsersRepository,
       val user = usersRepository.get(userId)
       usersRepository.update(user.copy(limitQuestionnaire = limitQuestionnaire.limit))
     })
-    updateUserRequest.location.foreach(usersRepository.setUserCurrentLocation(userId, _))
+    updateUserRequest.Location.foreach(usersRepository.setUserCurrentLocation(userId, _))
   }
 
   override def lastLocations(): Map[UserId, Location] = {

@@ -35,7 +35,7 @@ case class FacebookTokenDo(userId: UserId, token: String)
 
 case class QuestionnaireAnswerRequest(id: QuestionnaireId, location: Option[Location], answers: Seq[QuestionAnswer])
 
-case class UpdateUserRequest(location: Option[Location],
+case class UpdateUserRequest(Location: Option[Location],
                              limitQuestionnaire: Option[LimitQuestionnaire])
 
 case class LimitQuestionnaire(limit: Option[Int])
