@@ -19,7 +19,10 @@ class LogInUserFacade(usersRepository: UsersRepository,
 
   override def lastLocations(): Map[UserId, Location] = {
     usersRepository.getAll
-      .map(user => user.userId -> usersRepository.getUserLastLocation(user.userId))
+      .map(user => user.userId -> {
+        print(usersRepository.getUserLastLocation(user.userId))
+        usersRepository.getUserLastLocation(user.userId)
+      })
       .collect{ case (uId, Some(location)) => uId -> location }
       .toMap
   }
