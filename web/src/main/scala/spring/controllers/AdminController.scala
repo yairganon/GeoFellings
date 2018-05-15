@@ -1,5 +1,7 @@
 package spring.controllers
 
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import service.api.{QuestionsService, TriggerService, UserService}
@@ -64,8 +66,13 @@ class AdminController(questionsService: QuestionsService,
 
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("users-locations"))
   @ResponseBody
-  def getUsersLocations(): Seq[UserLocation] = {
-    userService.locations()
+  def getUsersLocations(): Seq[UserLocationView] = {
+    userService
+      .locations()
+      .groupBy(_.userId)
+      .map{case (uId, seq) =>
+        UserLocationView(uId.getId, seq.map(l => LocationView(new DateTime(l.time).toString(DateTimeFormat.forPattern("d MMMM, yyyy 'at' HH:mm")), l.location)))}
+      .toSeq
   }
 
   @RequestMapping(method = Array(RequestMethod.POST), value = Array("trigger"))
@@ -86,4 +93,7 @@ class AdminController(questionsService: QuestionsService,
   def deleteTrigger(@PathVariable("id") triggerId: QuestionnaireId): Unit = {
     triggerService.remove(triggerId)
   }
+
+  case class UserLocationView(userId: String, locations: Seq[LocationView])
+  case class LocationView(time: String, location: Location)
 }
