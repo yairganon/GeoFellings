@@ -28,7 +28,7 @@ class AppUsersController(registrationService: RegistrationService,
     val id3 = questionsService.addQuestionnaire(CreateQuestionnaireRequest("Location Q -2", true, true, Seq(qId1, qId2, qId3)))
       registrationService.registerUser(UserRegisterRequest("1", "1", Gender.MALE, 26, None))
     triggerService.addTrigger(CreateTriggerRequest("Trigger Name", id1, None, Some(SocialNetworkTrigger(true)), None))
-    triggerService.addTrigger(CreateTriggerRequest("Trigger Location", id1, Some(LocationTrigger(Location(31.26339066, 34.81366735), 100)), None, None))
+    triggerService.addTrigger(CreateTriggerRequest("Trigger Location", id3, Some(LocationTrigger(Location(31.26339066, 34.81366735), 100)), None, None))
     questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id1)
     questionsService.addQuestionnaireTo(userService.getAllUser()(0).userId, id2)
   } match {
