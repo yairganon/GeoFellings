@@ -107,7 +107,7 @@ class MySqlUsersRepo(template: NamedParameterJdbcTemplate)
   override def locations(): Seq[UserLocation] = {
     val sql =
       """
-        |SELECT `userId`, `data`, `creation_date` FROM geoFeelings.userLocations ORDER BY userId DESC, ORDER BY creation_date DESC;
+        |SELECT `userId`, `data`, `creation_date` FROM geoFeelings.userLocations ORDER BY userId DESC, creation_date DESC;
       """.stripMargin
     template.query(sql, Map.empty[String, String].asJava, rowMapperLocations).asScala
   }
