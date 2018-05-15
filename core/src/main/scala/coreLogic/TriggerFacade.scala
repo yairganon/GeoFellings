@@ -29,6 +29,9 @@ class TriggerFacade(triggerRepository: TriggerRepository) extends TriggerService
   }
 
   private def isInRange(userLocation: Location, location: Location, radius: Int) = {
+    println("User ", userLocation)
+    println("location ", location)
+    println(DistanceCalculator.calculateDistanceInKilometer(userLocation, location) <= radius)
     DistanceCalculator.calculateDistanceInKilometer(userLocation, location) <= radius
   }
 
