@@ -35,6 +35,13 @@ class AdminController(questionsService: QuestionsService,
     QuestionnairesView(questionsService.getQuestionnaires.map(_.toView(questions)))
   }
 
+  @RequestMapping(method = Array(RequestMethod.PATCH), value = Array("questionnaire/{id}"))
+  @ResponseBody
+  def patchQuestionnaire(@PathVariable("id") questionnaireId: QuestionnaireId,
+                         @RequestBody request: UpdateQuestionreRequest): Unit = {
+    questionsService.updateQuestionnaire(questionnaireId, request)
+  }
+
   @RequestMapping(method = Array(RequestMethod.GET), value = Array("question"))
   @ResponseBody
   def getQuestions: QuestionsView = {

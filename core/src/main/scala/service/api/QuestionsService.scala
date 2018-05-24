@@ -14,6 +14,8 @@ trait QuestionsService {
 
   def getAll: Seq[Question]
 
+  def updateQuestionnaire(questionnaireId: QuestionnaireId, request: UpdateQuestionreRequest): Unit
+
   def registerQuestionnaire: Option[Questionnaire]
 
   def defaultQuestionnaire: Option[Questionnaire]

@@ -22,6 +22,13 @@ class QuestionsFacade(questionsRepository: QuestionsRepository,
     questionsRepository.add(question)
   }
 
+  def updateQuestionnaire(questionnaireId: QuestionnaireId, request: UpdateQuestionreRequest): Unit = {
+    val questionnaire = getQuestionnaire(questionnaireId)
+    questionsRepository.add(questionnaire.copy(
+      isDefault = request.isDefault.getOrElse(questionnaire.isDefault),
+      isRegistration = request.isRegistration.getOrElse(questionnaire.isRegistration)))
+  }
+
   override def getAll: Seq[Question] = questionsRepository.getQuestions
 
   override def addQuestionnaire(request: CreateQuestionnaireRequest): QuestionnaireId = {

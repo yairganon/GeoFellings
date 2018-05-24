@@ -54,3 +54,6 @@ case class CreateTriggerRequest(triggerName: String,
                                 locationTrigger: Option[LocationTrigger],
                                 socialNetworkTrigger: Option[SocialNetworkTrigger],
                                 timeRangeTrigger: Option[TimeRangeTrigger])
+
+case class UpdateQuestionreRequest(isRegistration: Option[Boolean],
+                                        isDefault: Option[Boolean])
