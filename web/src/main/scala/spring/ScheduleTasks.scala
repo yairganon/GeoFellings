@@ -19,7 +19,7 @@ class ScheduleTasks(thirdPartyService: ThirdPartyService,
   val userLastFacebookPost = mutable.HashMap.empty[UserId, String]
 
 
-  @Scheduled(fixedRate = 20000)
+  @Scheduled(fixedRate = 2000)
   def checkForTriggers(): Unit = {
     checkForTweets()
     checkForLocation()
