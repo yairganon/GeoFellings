@@ -1,4 +1,3 @@
-DROP DATABASE geoFeelings;
 CREATE DATABASE IF NOT EXISTS geoFeelings;
 
 CREATE TABLE IF NOT EXISTS geoFeelings.questions (
